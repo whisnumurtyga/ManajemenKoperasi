@@ -26,7 +26,7 @@ public class UserDAO implements UserImplement{
     final String update = "UPDATE users SET name=?, username=?, password=?, email=?, level_id=? WHERE id=? ;";
     final String delete = "DELETE FROM users WHERE id=?;";
     final String getUsers = "SELECT * FROM users";
-    final String getUser = "SELECT * FROM users WHERE name LIKE %?%";
+    final String getUser = "SELECT * FROM users WHERE name LIKE '%?%';";
     
     public UserDAO(){
         connection = UserConnection.connection();
@@ -124,10 +124,16 @@ public class UserDAO implements UserImplement{
     @Override
     public List<User> getUser(String name) {
         List <User> listUser = null;
+
+        
         try{
             listUser = new ArrayList<User>();
-            PreparedStatement st = connection.prepareStatement(getUser);
-            st.setString(1, name);
+//            User tes = new User();
+//                    tes.setName("babi");
+//                    listUser.add(tes);
+                    
+            PreparedStatement st = connection.prepareStatement("SELECT * FROM users u WHERE u.name LIKE '%" + name + "%';");
+//            st.setString(1, "'%" + name + "%'");
             ResultSet rs = st.executeQuery();
             
             while(rs.next()) {

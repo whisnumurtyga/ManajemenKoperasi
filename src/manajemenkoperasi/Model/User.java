@@ -25,6 +25,7 @@ public class User {
     }
 
     public void setStatusId(Integer statusId) {
+        setStatus(statusId);
         this.statusId = statusId;
     }
 
