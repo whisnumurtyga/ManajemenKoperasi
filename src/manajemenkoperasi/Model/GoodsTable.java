@@ -52,7 +52,7 @@ public class GoodsTable extends AbstractTableModel {
             case 1:
                 return listGoods.get(rowIndex).getName();
             case 2:
-                return listGoods.get(rowIndex).getCategory_id();
+                return listGoods.get(rowIndex).getCategory();
             case 3:
                 return listGoods.get(rowIndex).getStock();
             case 4:
