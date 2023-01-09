@@ -26,7 +26,7 @@ public class UserDAO implements UserImplement{
     final String update = "UPDATE users SET name=?, username=?, password=?, email=?, level_id=? WHERE id=? ;";
     final String delete = "DELETE FROM users WHERE id=?;";
     final String getUsers = "SELECT * FROM users";
-    final String getUser = "SELECT * FROM users WHERE name LIKE %?%";
+    final String getUser = "SELECT * FROM users WHERE name LIKE '%?%';";
     
     public UserDAO(){
         connection = UserConnection.connection();
@@ -124,10 +124,16 @@ public class UserDAO implements UserImplement{
     @Override
     public List<User> getUser(String name) {
         List <User> listUser = null;
+
+        
         try{
             listUser = new ArrayList<User>();
-            PreparedStatement st = connection.prepareStatement(getUser);
-            st.setString(1, name);
+//            User tes = new User();
+//                    tes.setName("babi");
+//                    listUser.add(tes);
+                    
+            PreparedStatement st = connection.prepareStatement("SELECT * FROM users u WHERE u.name LIKE '%" + name + "%';");
+//            st.setString(1, "'%" + name + "%'");
             ResultSet rs = st.executeQuery();
             
             while(rs.next()) {
@@ -148,4 +154,38 @@ public class UserDAO implements UserImplement{
         return listUser;
     }
     
+    @Override
+    public User getUserEmail(String email) {
+        User user = null;
+        try{
+            User tes = new User();
+            tes.setName("babi");
+                    
+            PreparedStatement st = connection.prepareStatement("SELECT * FROM users u WHERE u.email='" + email + "';");
+//            st.setString(1, "'%" + name + "%'");
+            ResultSet rs = st.executeQuery();
+            
+            while(rs.next()) {           
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setName(rs.getString("name"));
+                u.setUsername(rs.getString("username"));
+                u.setPassword(rs.getString("password").toCharArray());
+                u.setEmail(rs.getString("email"));
+                u.setStatusId(rs.getInt("status"));
+                u.setLevelId(rs.getInt("level_id"));
+                if (u.getName() == null) {
+                    return tes;
+                }
+            return u;
+            }
+            
+            
+
+        } catch(SQLException e) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE,null, e);
+            System.out.println(e);
+        }
+        return null;
+    }
 }

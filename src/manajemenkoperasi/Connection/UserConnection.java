@@ -15,7 +15,7 @@ public class UserConnection {
     static Connection con;  
     
     public static Connection connection() {
-        if(con == null) {
+//        if(con == null) {
             MysqlDataSource data = new MysqlDataSource();
             data.setDatabaseName("koperasi");
             data.setUser("root");
@@ -25,7 +25,7 @@ public class UserConnection {
             }catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+//        }
         
         return con;
     }

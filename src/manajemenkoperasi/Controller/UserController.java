@@ -115,17 +115,18 @@ public class UserController {
         listUser = userImplement.getUser(userFrame.getTxtFindUser().getText());
         UserTable u = new UserTable(listUser);
         userFrame.getTableUser().setModel(u);
+//        JOptionPane.showMessageDialog(userFrame, listUser);
     }
      
 //    
     public void findUser() {
-        if(userFrame.getTxtFindUser().getText().trim().isEmpty()) {
+        if(!userFrame.getTxtFindUser().getText().trim().isEmpty()) {
             userImplement.getUser(userFrame.getTxtFindUser().getText());
             findUserTable();
-        } else {
-            JOptionPane.showMessageDialog(userFrame, "User tidak ditemukan");
-        }
+        } 
     }
+    
+
     
 
 }
