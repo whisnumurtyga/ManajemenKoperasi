@@ -100,8 +100,8 @@ public class User {
     }
 
     public void setPassword(char[] s) {
-//        this.password = password;
-        this.password = encrypt(s);
+        this.password = String.valueOf(s);
+//        this.password = encrypt(s);
     }
 
     public String getEmail() {

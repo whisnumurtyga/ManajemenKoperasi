@@ -154,4 +154,38 @@ public class UserDAO implements UserImplement{
         return listUser;
     }
     
+    @Override
+    public User getUserEmail(String email) {
+        User user = null;
+        try{
+            User tes = new User();
+            tes.setName("babi");
+                    
+            PreparedStatement st = connection.prepareStatement("SELECT * FROM users u WHERE u.email='" + email + "';");
+//            st.setString(1, "'%" + name + "%'");
+            ResultSet rs = st.executeQuery();
+            
+            while(rs.next()) {           
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setName(rs.getString("name"));
+                u.setUsername(rs.getString("username"));
+                u.setPassword(rs.getString("password").toCharArray());
+                u.setEmail(rs.getString("email"));
+                u.setStatusId(rs.getInt("status"));
+                u.setLevelId(rs.getInt("level_id"));
+                if (u.getName() == null) {
+                    return tes;
+                }
+            return u;
+            }
+            
+            
+
+        } catch(SQLException e) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE,null, e);
+            System.out.println(e);
+        }
+        return null;
+    }
 }
