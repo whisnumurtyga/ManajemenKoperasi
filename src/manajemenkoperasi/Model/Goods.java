@@ -9,7 +9,7 @@ package manajemenkoperasi.Model;
  * @author ASUS
  */
 public class Goods {
-    private Integer id,buy,sell,stock,category_id,supplier_id;
+    private Integer id,buy,sell,stock, categoryId,supplier_id;
     private String name,category,supplier,date,exp;
 
     public String getDate() {
@@ -61,28 +61,32 @@ public class Goods {
     }
 
     public Integer getCategory_id() {
-        return category_id;
+        return categoryId;
+    }
+    
+    public void setCategoryId(Integer id) {
+        this.categoryId = id;
     }
 
-    public void setCategory_id(String Category) {
+    public void setCategory(String Category) {
         switch (category) {
                 case "Snack":
-                    this.category_id = 1;
+                    this.categoryId = 1;
                     break;
                 case "Makanan":
-                    this.category_id = 2;
+                    this.categoryId = 2;
                     break;
                 case "Kudapan":
-                    this.category_id= 3;
+                    this.categoryId = 3;
                     break;
                 case "Gorengan":
-                    this.category_id = 4;
+                    this.categoryId = 4;
                     break;
                 case "Minuman":
-                    this.category_id = 5;
+                    this.categoryId = 5;
                      break;
                 case "ATK":
-                    this.category_id = 6;
+                    this.categoryId = 6;
                     break;
                 default:
                     break;
@@ -90,11 +94,12 @@ public class Goods {
     }
 
     public String getCategory() {
+        setCategory(categoryId);
         return category;
     }
 
-    public void setCategory(int category_id) {
-         switch (category_id) {
+    public void setCategory(int id) {
+         switch (id) {
                 case 1:
                     this.category = "Snack";
                     break;
@@ -141,10 +146,7 @@ public class Goods {
     public void setName(String name) {
         this.name = name;
     }
-    public void setCategory(String category) {
-        this.category = category;
-        setCategory_id(category);
-    }
+
     
     
 }
