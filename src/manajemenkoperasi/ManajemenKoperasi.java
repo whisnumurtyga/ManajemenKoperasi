@@ -5,7 +5,7 @@
 package manajemenkoperasi;
 
 import manajemenkoperasi.View.UserView;
-
+import manajemenkoperasi.View.GoodsView;
 /**
  *
  * @author whisn
@@ -18,6 +18,7 @@ public class ManajemenKoperasi {
     public static void main(String[] args) {
         // TODO code application logic here
         new UserView().setVisible(true);
+        new GoodsView().setVisible(true);
     }
     
 }

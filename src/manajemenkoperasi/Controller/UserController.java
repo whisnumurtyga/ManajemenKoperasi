@@ -60,7 +60,7 @@ public class UserController {
 //    Insert Data dari Form ke Database
     public void insert() {
         if(!userFrame.getTxtName().getText().trim().isEmpty()){
-           
+       
             User u = new User();
             u.setName(userFrame.getTxtName().getText());
             u.setUsername(userFrame.getTxtUsername().getText());
