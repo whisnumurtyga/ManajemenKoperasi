@@ -103,12 +103,13 @@ public class GoodsDAO implements GoodsImplement {
                 Goods g = new Goods();
                 g.setId(rs.getInt("id"));
                 g.setName(rs.getString("name"));
-                g.setCategory(rs.getInt("category_id"));
+                g.setCategoryId(rs.getInt("category_id"));
                 g.setSupplier(rs.getString("supplier_id"));
                 g.setStock(rs.getInt("stock"));
                 g.setBuy(rs.getInt("buy"));
                 g.setSell(rs.getInt("sell"));
                 g.setDate(rs.getString("date"));
+                
                 listGoods.add(g);
             }
         } catch(SQLException e) {
