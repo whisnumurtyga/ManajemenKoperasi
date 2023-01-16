@@ -13,6 +13,7 @@ public class Goods {
     private String name,category,supplier,date,exp;
 
     public String getDate() {
+        
         return date;
     }
 
@@ -25,6 +26,7 @@ public class Goods {
     }
 
     public void setExp(String exp) {
+        
         this.exp = exp;
     }
 
@@ -69,7 +71,7 @@ public class Goods {
     }
 
     public void setCategory(String Category) {
-        switch (category) {
+        switch (Category) {
                 case "Snack":
                     this.categoryId = 1;
                     break;
@@ -96,7 +98,9 @@ public class Goods {
     public String getCategory() {
         setCategory(categoryId);
         return category;
+        
     }
+    
 
     public void setCategory(int id) {
          switch (id) {
@@ -146,7 +150,5 @@ public class Goods {
     public void setName(String name) {
         this.name = name;
     }
-
-    
-    
+     
 }

@@ -20,9 +20,10 @@ import manajemenkoperasi.DAOImplement.GoodsImplement;
 public class GoodsDAO implements GoodsImplement {
     Connection connection;
     final String insert = "INSERT INTO goods (name, category_id, supplier_id, stock, buy,sell,date,exp) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-    final String update = "UPDATE users SET name=?, category_id=?, supplier_id=?, stock=?, buy=?, sell=?, date=?, exp=?, WHERE id=? ;";
+    final String update = "UPDATE goods SET name=?, category_id=?, supplier_id=?, stock=?, buy=?, sell=?, date=?, exp=? WHERE id=? ;";
     final String delete = "DELETE FROM goods WHERE id=?;";
     final String getGoods = "SELECT * FROM goods";
+    
     
     
     public GoodsDAO(){
@@ -34,12 +35,13 @@ public class GoodsDAO implements GoodsImplement {
         try{
             statement = (PreparedStatement) connection.prepareStatement(insert);
             statement.setString(1, g.getName());
-            statement.setString(2, g.getCategory());
-            statement.setString(3, g.getSupplier());
-            statement.setInt(4, g.getBuy());
-            statement.setInt(5, g.getSell());
-            statement.setString(6, g.getDate());
-            statement.setString(7, g.getExp());
+            statement.setInt(2, g.getCategory_id());
+            statement.setInt(3, g.getSupplier_id());
+            statement.setInt(4, g.getStock());
+            statement.setInt(5, g.getBuy());
+            statement.setInt(6, g.getSell());
+            statement.setString(7, g.getDate());
+            statement.setString(8, g.getExp());
             statement.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();
@@ -57,12 +59,14 @@ public class GoodsDAO implements GoodsImplement {
         try{
             statement = (PreparedStatement) connection.prepareStatement(update);
             statement.setString(1, g.getName());
-            statement.setString(2, g.getCategory());
-            statement.setString(3, g.getSupplier());
-            statement.setInt(4, g.getBuy());
-            statement.setInt(5, g.getSell());
-            statement.setString(6, g.getDate());
-            statement.setString(7, g.getExp());
+            statement.setInt(2, g.getCategory_id());
+            statement.setInt(3, g.getSupplier_id());
+            statement.setInt(4, g.getStock());
+            statement.setInt(5, g.getBuy());
+            statement.setInt(6, g.getSell());
+            statement.setString(7,g.getDate());
+            statement.setString(8, g.getExp());
+            statement.setInt(9, g.getId());
             statement.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();
@@ -109,10 +113,94 @@ public class GoodsDAO implements GoodsImplement {
                 g.setBuy(rs.getInt("buy"));
                 g.setSell(rs.getInt("sell"));
                 g.setDate(rs.getString("date"));
+                g.setExp(rs.getString("exp"));
                 
                 listGoods.add(g);
             }
         } catch(SQLException e) {
+            System.out.println(e);
+        } 
+        return listGoods;
+    }
+     @Override
+    public List<Goods> getGood(String name) {
+        List <Goods> listGoods = null;
+
+        
+        try{
+            listGoods = new ArrayList<Goods>();                    
+            java.sql.PreparedStatement st = connection.prepareStatement("SELECT * FROM goods g WHERE g.name LIKE '%" + name + "%';");
+            ResultSet rs = st.executeQuery();
+            
+            while(rs.next()) {
+                Goods g = new Goods ();
+                g.setId(rs.getInt("id"));
+                g.setName(rs.getString("name"));
+                g.setCategoryId(rs.getInt("category_id"));
+                g.setSupplier(rs.getString("supplier_id"));
+                g.setStock(rs.getInt("stock"));
+                g.setBuy(rs.getInt("buy"));
+                g.setSell(rs.getInt("sell"));
+                g.setDate(rs.getString("date"));
+                g.setExp(rs.getString("exp"));
+                
+                listGoods.add(g);
+            }
+        } catch(SQLException e) {
+           
+            System.out.println(e);
+        } 
+        return listGoods;
+    }
+     @Override
+    public List<Goods> filter(String category) { 
+        int categoryId = 0;
+        switch (category) {
+                case "Snack":
+                    categoryId = 1;
+                    break;
+                case "Makanan":
+                   categoryId = 2;
+                    break;
+                case "Kudapan":
+                    categoryId = 3;
+                    break;
+                case "Gorengan":
+                    categoryId = 4;
+                    break;
+                case "Minuman":
+                    categoryId = 5;
+                     break;
+                case "ATK":
+                    categoryId = 6;
+                    break;
+                default:
+                    break;
+        }
+        List <Goods> listGoods = null;
+        
+        
+        try{
+            listGoods = new ArrayList<Goods>();                    
+         java.sql.PreparedStatement st = connection.prepareStatement("SELECT * FROM goods g WHERE g.category_id =  '" + categoryId + "';");
+            ResultSet rs = st.executeQuery();
+            
+            while(rs.next()) {
+                Goods g = new Goods ();
+                g.setId(rs.getInt("id"));
+                g.setName(rs.getString("name"));
+                g.setCategoryId(rs.getInt("category_id"));
+                g.setSupplier(rs.getString("supplier_id"));
+                g.setStock(rs.getInt("stock"));
+                g.setBuy(rs.getInt("buy"));
+                g.setSell(rs.getInt("sell"));
+                g.setDate(rs.getString("date"));
+                g.setExp(rs.getString("exp"));
+                
+                listGoods.add(g);
+            }
+        } catch(SQLException e) {
+           
             System.out.println(e);
         } 
         return listGoods;

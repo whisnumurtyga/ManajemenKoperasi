@@ -122,6 +122,12 @@ public class UserView extends javax.swing.JFrame {
 
         labelFind.setText("Find User : ");
 
+        txtFindUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFindUserActionPerformed(evt);
+            }
+        });
+
         btnSearch.setText("Search");
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -342,6 +348,10 @@ public class UserView extends javax.swing.JFrame {
     private void comboxLevelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboxLevelActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboxLevelActionPerformed
+
+    private void txtFindUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFindUserActionPerformed
 
     /**
      * @param args the command line arguments

@@ -18,7 +18,7 @@ public interface GoodsImplement {
     public void delete(Integer id);
     
     public List<Goods> getGoods();
-
-    
+    public List<Goods> getGood(String name);
+    public List<Goods> filter(String category);
     
 }
