@@ -3,8 +3,8 @@
  */
 package manajemenkoperasi;
 
-import manajemenkoperasi.View.UserView;
-import manajemenkoperasi.View.GoodsView;
+import manajemenkoperasi.Model.User;
+import manajemenkoperasi.View.LoginView;
 /**
  *
  * @author whisn
@@ -14,10 +14,13 @@ public class ManajemenKoperasi {
     /**
      * @param args the command line arguments
      */
+    
     public static void main(String[] args) {
         // TODO code application logic here
-        new UserView().setVisible(true);
-        new GoodsView().setVisible(true);
+        new LoginView().setVisible(true);
+        
+//        new UserView().setVisible(true);
+//        new GoodsView().setVisible(true);
     }
     
 }

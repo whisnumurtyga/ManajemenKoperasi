@@ -20,5 +20,6 @@ public interface GoodsImplement {
     public List<Goods> getGoods();
     public List<Goods> getGood(String name);
     public List<Goods> filter(String category);
+    public Goods getGood(Integer id);
     
 }

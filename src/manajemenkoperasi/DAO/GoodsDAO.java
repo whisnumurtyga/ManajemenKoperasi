@@ -152,6 +152,36 @@ public class GoodsDAO implements GoodsImplement {
         } 
         return listGoods;
     }
+    
+    
+    @Override
+    public Goods getGood(Integer id) {
+        try{
+                
+            java.sql.PreparedStatement st = connection.prepareStatement("SELECT * FROM goods g WHERE g.id ="+ id + ";");
+            ResultSet rs = st.executeQuery();
+            
+            while(rs.next()) {
+                Goods g = new Goods ();
+                g.setId(rs.getInt("id"));
+                g.setName(rs.getString("name"));
+                g.setCategoryId(rs.getInt("category_id"));
+                g.setSupplier(rs.getString("supplier_id"));
+                g.setStock(rs.getInt("stock"));
+                g.setBuy(rs.getInt("buy"));
+                g.setSell(rs.getInt("sell"));
+                g.setDate(rs.getString("date"));
+                g.setExp(rs.getString("exp"));
+                
+                return g;
+            }
+        } catch(SQLException e) {
+           
+            System.out.println(e);
+        } 
+        return null;
+    }
+    
      @Override
     public List<Goods> filter(String category) { 
         int categoryId = 0;

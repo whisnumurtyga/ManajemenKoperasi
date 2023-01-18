@@ -10,6 +10,7 @@ import manajemenkoperasi.DAOImplement.UserImplement;
 import manajemenkoperasi.Model.User;
 import manajemenkoperasi.View.DashboardView;
 import manajemenkoperasi.View.LoginView;
+import manajemenkoperasi.View.TransactionView;
 
 /**
  *
@@ -17,26 +18,36 @@ import manajemenkoperasi.View.LoginView;
  */
 public class LoginController {
     LoginView loginFrame;
+    TransactionView transactionFrame;
     UserImplement userImplement;
     User user = new User();
+    public static User userLogged;
     
     public LoginController(LoginView loginFrame) {
         this.loginFrame = loginFrame;
         userImplement = new UserDAO();
     }
-        
+//
+//    public LoginController(TransactionController transactionController) {
+//        this.transactionController = transactionController;
+////        userImplement = new UserDAO();
+//    }
+    
+    
     public void login() {
         user = userImplement.getUserEmail(loginFrame.getTxtEmail().getText());
-//        String password = String.valueOf(loginFrame.getTxtPassword().getPassword());
-//            JOptionPane.showMessageDialog(loginFrame, user.getPassword());
-//            JOptionPane.showMessageDialog(loginFrame, loginFrame.getTxtPassword().getPassword());
-//            JOptionPane.showMessageDialog(loginFrame, user.getPassword());
-        if (user.getName() == null) {
+//        JOptionPane.showMessageDialog(loginFrame, (user != null));
+//        JOptionPane.showMessageDialog(loginFrame, user);
+//        JOptionPane.showMessageDialog(loginFrame, user.getName());
+
+        if (user == null) {
             JOptionPane.showMessageDialog(loginFrame, "User not found");
-        } else {
+        }  
+        else {
             String password = String.valueOf(loginFrame.getTxtPassword().getPassword());
             if(user.getPassword().equals(password)) {
                 JOptionPane.showMessageDialog(loginFrame, "Login berhasil");
+                userLogged = user;
                 new DashboardView().setVisible(true);
                 loginFrame.setVisible(false);
             } else {

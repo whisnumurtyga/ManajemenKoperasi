@@ -4,17 +4,23 @@
  */
 package manajemenkoperasi.View;
 
+import java.awt.Dimension;
+
 /**
  *
  * @author whisn
  */
 public class DashboardView extends javax.swing.JFrame {
-
+    GoodsView goodsView;
+    UserView userView;
+    TransactionView transactionView;
+    
     /**
      * Creates new form DashboardView
      */
     public DashboardView() {
         initComponents();
+        transactionView = new TransactionView();
     }
 
     /**
@@ -27,31 +33,104 @@ public class DashboardView extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        btnUser = new javax.swing.JButton();
+        btnGoods = new javax.swing.JButton();
+        btnTransaction = new javax.swing.JButton();
+        btnInformation = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setText("DASHBOARD");
 
+        btnUser.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnUser.setText("USER");
+        btnUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUserActionPerformed(evt);
+            }
+        });
+
+        btnGoods.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnGoods.setText("GOODS");
+        btnGoods.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGoodsActionPerformed(evt);
+            }
+        });
+
+        btnTransaction.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnTransaction.setText("TRANSACTION");
+        btnTransaction.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTransactionActionPerformed(evt);
+            }
+        });
+
+        btnInformation.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnInformation.setText("MIS");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(200, 200, 200)
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnGoods, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+                        .addComponent(btnInformation, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnUser, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTransaction, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(77, 77, 77))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(233, Short.MAX_VALUE))
+                .addGap(212, 212, 212))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(170, 170, 170)
+                .addGap(59, 59, 59)
                 .addComponent(jLabel1)
-                .addContainerGap(213, Short.MAX_VALUE))
+                .addGap(48, 48, 48)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnUser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTransaction, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(89, 89, 89)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGoods, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInformation, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(113, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new UserView().setVisible(true);
+    }//GEN-LAST:event_btnUserActionPerformed
+
+    private void btnGoodsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoodsActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new GoodsView().setVisible(true);
+    }//GEN-LAST:event_btnGoodsActionPerformed
+
+    private void btnTransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransactionActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        transactionView.setPreferredSize(new Dimension(940, 733));
+        transactionView.pack();
+        transactionView.setLocationRelativeTo(null);
+        transactionView.setVisible(true);
+        
+    }//GEN-LAST:event_btnTransactionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -89,6 +168,10 @@ public class DashboardView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGoods;
+    private javax.swing.JButton btnInformation;
+    private javax.swing.JButton btnTransaction;
+    private javax.swing.JButton btnUser;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
