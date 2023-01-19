@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import manajemenkoperasi.DAO.DetailTransactionDAO;
 import manajemenkoperasi.DAO.GoodsDAO;
+import manajemenkoperasi.DAO.TransactionDAO;
 import manajemenkoperasi.DAOImplement.DetailTransactionImplement;
 import manajemenkoperasi.DAOImplement.GoodsImplement;
 import manajemenkoperasi.DAOImplement.TransactionImplement;
@@ -15,6 +16,7 @@ import manajemenkoperasi.Model.DetailTransaction;
 import manajemenkoperasi.Model.DetailTransactionTable;
 import manajemenkoperasi.Model.Goods;
 import manajemenkoperasi.Model.GoodsTable;
+import manajemenkoperasi.Model.Transaction;
 import manajemenkoperasi.Model.User;
 import manajemenkoperasi.View.TransactionView;
 
@@ -24,7 +26,7 @@ import manajemenkoperasi.View.TransactionView;
  */
 public class TransactionController {
     TransactionView transactionFrame;
-    TransactionImplement transactionImpelement;
+    TransactionImplement transactionImplement;
     DetailTransactionImplement detailTransactionImplement;
     GoodsImplement goodsImplement;
     List <Goods> listGoods;
@@ -32,20 +34,25 @@ public class TransactionController {
     
     public TransactionController(TransactionView transactionFrame) {
         this.transactionFrame = transactionFrame;
+        transactionImplement = new TransactionDAO();
         goodsImplement = new GoodsDAO();
         listGoods = goodsImplement.getGoods();
         detailTransactionImplement = new DetailTransactionDAO();
     }
     
     public void fillTableDetailTransaction() {
-        listDetailTransaction = detailTransactionImplement.getAll(getLoggedUser().getId());
-//        JOptionPane.showMessageDialog(null, listDetailTransaction);
+        listDetailTransaction = detailTransactionImplement.getAll(LoginController.userLogged.getId());
+//        if(listDetailTransaction != null) {
+//            JOptionPane.showMessageDialog(null, "detail transaction null");
+//        }
         DetailTransactionTable detailTransactionTable = new DetailTransactionTable(listDetailTransaction);
         transactionFrame.getTableDetailTransaction().setModel(detailTransactionTable);
     }
 
     public void fillTableGoods() {
 //        JOptionPane.showMessageDialog(null, listDetailTransaction);
+        transactionFrame.getTxtUserId().setText(LoginController.userLogged.getId().toString()); 
+        listGoods = goodsImplement.getGoods();
         GoodsTable goodsTable = new GoodsTable(listGoods);
         transactionFrame.getTableGoods().setModel(goodsTable);
     }
@@ -64,7 +71,7 @@ public class TransactionController {
             Integer qty = Integer.valueOf(transactionFrame.getTxtQty().getText());
 //            JOptionPane.showMessageDialog(null, qty);
             transactionFrame.getTxtPrice().setText(String.valueOf(qty * price));
-            transactionFrame.getTxtGoodsName().setText(String.valueOf(listGoods.get(row).getGoodsName()));
+            transactionFrame.getTxtGoodsName().setText(String.valueOf(listGoods.get(row).getName()));
 //            JOptionPane.showMessageDialog(null, price);
         }
     }
@@ -79,10 +86,14 @@ public class TransactionController {
         transactionFrame.getTxtGoodsId().setText("");
         transactionFrame.getTxtQty().setText("");
         transactionFrame.getTxtPrice().setText("");
+        transactionFrame.getTxtGoodsName().setText("");
     }
     
     public void insert() {
         if(!transactionFrame.getTxtGoodsId().getText().trim().isEmpty()){
+            Transaction t = transactionImplement.get(Integer.valueOf(transactionFrame.getTxtUserId().getText()));
+            if(t == null);
+                
             Integer qty = Integer.valueOf(transactionFrame.getTxtQty().getText());
             DetailTransaction dt = new DetailTransaction();
             dt.setGoodsId(Integer.valueOf(transactionFrame.getTxtGoodsId().getText()));
@@ -95,10 +106,10 @@ public class TransactionController {
             dt.setCapital(qty * baseCapital);
             
             detailTransactionImplement.insert(dt);
-            JOptionPane.showMessageDialog(null, "Successfully added User");
+            JOptionPane.showMessageDialog(null, "Barang berhasil ditambahkan");
         }else {
-            JOptionPane.showMessageDialog(transactionFrame, "Failed added User");
-        };
+            JOptionPane.showMessageDialog(transactionFrame, "Failed");
+        }
         
     }
 }

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import manajemenkoperasi.Connection.UserConnection;
 import manajemenkoperasi.DAOImplement.DetailTransactionImplement;
 import manajemenkoperasi.Model.DetailTransaction;
@@ -46,10 +47,12 @@ public class DetailTransactionDAO implements DetailTransactionImplement{
         try{
             detailTransactions = new ArrayList<DetailTransaction>();
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM detail_transactions WHERE transaction_id = "
-                    + "(SELECT id FROM transactions t WHERE t.user_id = 10 AND t.status = 0)");
+            ResultSet rs = st.executeQuery("SELECT dt.id, dt.transaction_id, dt.goods_id, dt.qty, dt.capital, dt.pay, g.name FROM detail_transactions dt, goods g  WHERE dt.transaction_id = (SELECT t.id FROM transactions t WHERE t.user_id = " + userId + " AND t.status = 0) AND  g.id = dt.goods_id    ");
             
             while(rs.next()) {
+                Integer goodsId = rs.getInt("goods_id");
+                Integer detailTransactionId = rs.getInt("id");
+                
                 DetailTransaction dt = new DetailTransaction();
                 dt.setId(rs.getInt("id"));
                 dt.setTransacionId(rs.getInt("transaction_id"));
@@ -57,12 +60,7 @@ public class DetailTransactionDAO implements DetailTransactionImplement{
                 dt.setQty(rs.getInt("qty"));
                 dt.setCapital(rs.getInt("capital"));
                 dt.setPay(rs.getInt("pay"));
-                
-                Statement st2 = connection.createStatement();
-                ResultSet rs2 = st2.executeQuery("SELECT g.name FROM detail_transactions dt, goods g WHERE dt.transaction_id = 1 AND g.id = " + dt.getGoodsId());
-                while(rs2.next()) {                    
-                    dt.setGoodsName(rs2.getString("name"));
-                }
+                dt.setGoodsName(rs.getString("name"));
                 
                 detailTransactions.add(dt);
             }

@@ -4,10 +4,12 @@
  */
 package manajemenkoperasi.DAOImplement;
 
+import manajemenkoperasi.Model.Transaction;
+
 /**
  *
  * @author whisn
  */
 public interface TransactionImplement {
-    
+    public Transaction get(Integer userId);
 }

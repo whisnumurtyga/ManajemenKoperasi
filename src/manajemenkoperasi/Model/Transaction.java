@@ -9,6 +9,54 @@ package manajemenkoperasi.Model;
  * @author whisn
  */
 public class Transaction {
-    Integer uId, totalPay, profit, paymentId;
+    Integer id, userId, totalPay, profit, paymentId, totalCapital;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getTotalPay() {
+        return totalPay;
+    }
+
+    public void setTotalPay(Integer totalPay) {
+        this.totalPay = totalPay;
+    }
+
+    public Integer getProfit() {
+        return profit;
+    }
+
+    public void setProfit(Integer profit) {
+        this.profit = profit;
+    }
+
+    public Integer getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(Integer paymentId) {
+        this.paymentId = paymentId;
+    }
+
+    public Integer getTotalCapital() {
+        return totalCapital;
+    }
+
+    public void setTotalCapital(Integer totalCapital) {
+        this.totalCapital = totalCapital;
+    }
     
 }

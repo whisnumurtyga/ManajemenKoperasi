@@ -25,6 +25,7 @@ public class TransactionView extends javax.swing.JFrame {
         initComponents();
         txtUserId.setEnabled(false);
         txtPrice.setEnabled(false);
+        txtGoodsName.setEnabled(false);
         txtGoodsId.setEnabled(false);
         transactionController = new TransactionController(this);
 //        JOptionPane.showMessageDialog(null, transactionController.getLoggedUser().getId());
@@ -507,21 +508,21 @@ public class TransactionView extends javax.swing.JFrame {
     private void txtQtyFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtQtyFocusLost
         // TODO add your handling code here:
 //         JOptionPane.showMessageDialog(null, "fokus lost : ");
-        if(Integer.valueOf(getTxtQty().getText())  != null) {
+         if(getTxtQty().getText().equals("") && !(getTxtGoodsId().getText().equals(""))) {
             transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
         }
     }//GEN-LAST:event_txtQtyFocusLost
 
     private void txtQtyMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtQtyMouseExited
         // TODO add your handling code here:
-        if(Integer.valueOf(getTxtQty().getText())  != null) {
+        if(getTxtQty().getText().equals("") && !(getTxtGoodsId().getText().equals(""))) {
             transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
         }
     }//GEN-LAST:event_txtQtyMouseExited
 
     private void txtQtyMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtQtyMouseMoved
         // TODO add your handling code here:
-        if(Integer.valueOf(getTxtQty().getText())  != null) {
+        if(!(getTxtQty().getText().equals("")) && !(getTxtGoodsId().getText().equals(""))) {
             transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
         }
     }//GEN-LAST:event_txtQtyMouseMoved
