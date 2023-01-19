@@ -4,7 +4,10 @@
  */
 package manajemenkoperasi.Controller;
 
+import com.toedter.calendar.JDateChooser;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import manajemenkoperasi.DAO.GoodsDAO;
@@ -28,8 +31,12 @@ public class GoodsController {
         goodsImplement = new GoodsDAO();
         listGoods= goodsImplement.getGoods();
     }
-     public void fillForm(int row) {
-      
+     public void fillform(int row) throws ParseException {    
+         
+        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(listGoods.get(row).getDate());
+        Date exp = new SimpleDateFormat("yyyy-MM-dd").parse(listGoods.get(row).getExp());
+         goodsFrame.getTxtDate().setDate(date);
+        goodsFrame.getTxtEXP().setDate(exp); 
         goodsFrame.getTxtIDG().setText(String.valueOf(listGoods.get(row).getId()));
         goodsFrame.getTxtNamaG().setText(listGoods.get(row).getName());
         goodsFrame.getBoxCategory().setSelectedItem(listGoods.get(row).getCategory());
@@ -37,8 +44,8 @@ public class GoodsController {
         goodsFrame.getTxtStock().setText(String.valueOf(listGoods.get(row).getStock()));
         goodsFrame.getTxtBuy().setText(String.valueOf(listGoods.get(row).getBuy()));
         goodsFrame.getTxtSell().setText(String.valueOf(listGoods.get(row).getSell()));   
-//        goodsFrame.getTxtDate().setText(listGoods.get(row).getDate());
-//        goodsFrame.getTxtEXP().setText(listGoods.get(row).getExp());
+    
+          
     }
      public void clear() {
         goodsFrame.getTxtIDG().setText("");
@@ -47,25 +54,30 @@ public class GoodsController {
         goodsFrame.getTxtStock().setText("");
         goodsFrame.getTxtBuy().setText("");
         goodsFrame.getTxtSell().setText("");
-//        goodsFrame.getTxtDate().setText("");
-//        goodsFrame.getTxtEXP().setText("");
-        goodsFrame.getBoxCategory().setSelectedItem("-- select category -- ");
+        goodsFrame.getTxtDate().setDate(null);
+        goodsFrame.getTxtEXP().setDate(null);
+        goodsFrame.getBoxCategory().setSelectedItem("-- select category --");
     }
       public void insert() {
+          String tampilan = "yyyy-MM-dd";
+          SimpleDateFormat date = new SimpleDateFormat(tampilan);
+          String tanggal = String.valueOf(date.format(goodsFrame.getTxtDate().getDate()));
+          String tanggal1 = String.valueOf(date.format(goodsFrame.getTxtEXP().getDate()));
+          
         if(!goodsFrame.getTxtNamaG().getText().trim().isEmpty()){
        
-            Goods g = new Goods();
+          Goods g = new Goods();
             g.setName(goodsFrame.getTxtNamaG().getText());
             g.setSupplier_id(Integer.valueOf(goodsFrame.getTxtSupplier().getText()));
             g.setStock(Integer.valueOf(goodsFrame.getTxtStock().getText()));
             g.setSell(Integer.valueOf(goodsFrame.getTxtSell().getText()));
             g.setBuy(Integer.valueOf(goodsFrame.getTxtBuy().getText()));
             g.setCategory(goodsFrame.getBoxCategory().getSelectedItem().toString());
-//            g.setDate(goodsFrame.getTxtDate().getText());
-//            g.setExp(goodsFrame.getTxtEXP().getText());
-//            
-            goodsImplement.insert(g);
-            JOptionPane.showMessageDialog(null, "Successfully added User");
+            g.setDate(tanggal);
+            g.setExp(tanggal1);
+          
+           goodsImplement.insert(g);
+            JOptionPane.showMessageDialog(goodsFrame,"Berhasil add user" );
         }else {
             JOptionPane.showMessageDialog(goodsFrame, "Failed added User");
         }
@@ -82,17 +94,21 @@ public class GoodsController {
         }
     }     
        public void update() {
+         String tampilan = ("yyyy-MM-dd");
+         SimpleDateFormat date =new SimpleDateFormat(tampilan);
+         String tanggal= date.format(goodsFrame.txtDate.getDate());
+         String tanggal1 = String.valueOf(date.format(goodsFrame.getTxtEXP().getDate()));
         if(!goodsFrame.getTxtIDG().getText().trim().isEmpty()){
             Goods g = new Goods();
             g.setName(goodsFrame.getTxtNamaG().getText());
-//            g.setDate(goodsFrame.getTxtDate().getText());
-//            g.setExp(goodsFrame.getTxtEXP().getText());
+            g.setDate(tanggal);
+            g.setExp(tanggal1);
             g.setCategory(goodsFrame.getBoxCategory().getSelectedItem().toString());
             g.setSupplier_id(Integer.valueOf(goodsFrame.getTxtSupplier().getText()));
             g.setStock(Integer.valueOf(goodsFrame.getTxtStock().getText()));
             g.setBuy(Integer.valueOf(goodsFrame.getTxtBuy().getText()));
             g.setSell(Integer.valueOf(goodsFrame.getTxtSell().getText()));
-             g.setId(Integer.valueOf(goodsFrame.getTxtIDG().getText()));
+            g.setId(Integer.valueOf(goodsFrame.getTxtIDG().getText()));
             
             goodsImplement.update(g);
             JOptionPane.showMessageDialog(null, "Successfully update User");
