@@ -5,11 +5,15 @@
 package manajemenkoperasi.DAOImplement;
 
 import manajemenkoperasi.Model.Transaction;
+import manajemenkoperasi.Model.User;
 
 /**
  *
  * @author whisn
  */
 public interface TransactionImplement {
+    public void insert(Transaction t);
+    public void update(Transaction t);
+    
     public Transaction get(Integer userId);
 }

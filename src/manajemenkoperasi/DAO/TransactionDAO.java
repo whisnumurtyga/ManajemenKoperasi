@@ -26,7 +26,7 @@ public class TransactionDAO implements TransactionImplement  {
     @Override
     public Transaction get(Integer userId) {
         try{      
-            PreparedStatement st = (PreparedStatement) connection.prepareStatement("SELECT * FROM transactions t WHERE t.user_id = " + userId + "AND t.status = 0;");
+            PreparedStatement st = (PreparedStatement) connection.prepareStatement("SELECT * FROM transactions t WHERE t.user_id = " + userId + " AND t.status = 0;");
             ResultSet rs = st.executeQuery();
             
             while(rs.next()) {
@@ -38,6 +38,46 @@ public class TransactionDAO implements TransactionImplement  {
             System.out.println(e);
         } 
         return null;
+    }
+
+    @Override
+    public void insert(Transaction t) {
+        java.sql.PreparedStatement statement = null;
+        try{
+            statement = (java.sql.PreparedStatement) connection.prepareStatement("INSERT INTO transactions (user_id, status) VALUES (?, ?);");
+            statement.setInt(1, t.getUserId());
+            statement.setInt(2, t.getStatus());
+            statement.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void update(Transaction t) {
+        PreparedStatement statement = null;
+        try{
+            statement = (PreparedStatement) connection.prepareStatement("UPDATE transactions SET total_pay=?, total_capital=?, profit=?, payment_id=1 WHERE id=? ;");
+            statement.setInt(1, t.getTotalPay());
+            statement.setInt(2, t.getTotalCapital());
+            statement.setInt(3, t.getProfit());
+            statement.setInt(4, t.getId());
+            statement.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

@@ -35,7 +35,7 @@ public class GoodsController {
          
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse(listGoods.get(row).getDate());
         Date exp = new SimpleDateFormat("yyyy-MM-dd").parse(listGoods.get(row).getExp());
-         goodsFrame.getTxtDate().setDate(date);
+        goodsFrame.getTxtDate().setDate(date);
         goodsFrame.getTxtEXP().setDate(exp); 
         goodsFrame.getTxtIDG().setText(String.valueOf(listGoods.get(row).getId()));
         goodsFrame.getTxtNamaG().setText(listGoods.get(row).getName());

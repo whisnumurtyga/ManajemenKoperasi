@@ -9,7 +9,7 @@ package manajemenkoperasi.Model;
  * @author whisn
  */
 public class DetailTransaction {
-    Integer id, transacionId, goodsId, qty, capital, pay;
+    Integer id, transactionId, goodsId, qty, capital, pay;
     String goodsName;
     
     public Integer getId() {
@@ -20,12 +20,12 @@ public class DetailTransaction {
         this.id = id;
     }
 
-    public Integer getTransacionId() {
-        return transacionId;
+    public Integer getTransactionId() {
+        return transactionId;
     }
 
-    public void setTransacionId(Integer transacionId) {
-        this.transacionId = transacionId;
+    public void setTransactionId(Integer transactionId) {
+        this.transactionId = transactionId;
     }
 
     public Integer getGoodsId() {

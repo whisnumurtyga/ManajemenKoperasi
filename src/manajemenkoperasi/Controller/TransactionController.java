@@ -42,11 +42,12 @@ public class TransactionController {
     
     public void fillTableDetailTransaction() {
         listDetailTransaction = detailTransactionImplement.getAll(LoginController.userLogged.getId());
-//        if(listDetailTransaction != null) {
-//            JOptionPane.showMessageDialog(null, "detail transaction null");
-//        }
-        DetailTransactionTable detailTransactionTable = new DetailTransactionTable(listDetailTransaction);
-        transactionFrame.getTableDetailTransaction().setModel(detailTransactionTable);
+        if(listDetailTransaction == null) {
+            JOptionPane.showMessageDialog(null, "detail transaction null");
+        } else {
+            DetailTransactionTable detailTransactionTable = new DetailTransactionTable(listDetailTransaction);
+            transactionFrame.getTableDetailTransaction().setModel(detailTransactionTable);
+        }
     }
 
     public void fillTableGoods() {
@@ -91,22 +92,70 @@ public class TransactionController {
     
     public void insert() {
         if(!transactionFrame.getTxtGoodsId().getText().trim().isEmpty()){
-            Transaction t = transactionImplement.get(Integer.valueOf(transactionFrame.getTxtUserId().getText()));
-            if(t == null);
-                
             Integer qty = Integer.valueOf(transactionFrame.getTxtQty().getText());
-            DetailTransaction dt = new DetailTransaction();
-            dt.setGoodsId(Integer.valueOf(transactionFrame.getTxtGoodsId().getText()));
+            Transaction t = transactionImplement.get(Integer.valueOf(transactionFrame.getTxtUserId().getText()));
             
-            Goods g = goodsImplement.getGood(dt.getGoodsId());
-            Integer baseCapital = g.getBuy();
+            if(t == null) {
+
+//                JOptionPane.showMessageDialog(null, "transaksi yang belum kelar gak ada");
+                Transaction newT = new Transaction();
+                newT.setUserId(Integer.valueOf(transactionFrame.getTxtUserId().getText()));
+                newT.setStatus(0);
+                transactionImplement.insert(newT);
+                
+                DetailTransaction dt = new DetailTransaction();
+                Goods g = goodsImplement.getGood(Integer.valueOf(transactionFrame.getTxtGoodsId().getText()));
+                Integer baseCapital = g.getBuy();
+                dt.setTransactionId(newT.getId());
+                dt.setGoodsId(Integer.valueOf(transactionFrame.getTxtGoodsId().getText()));
+                dt.setQty(Integer.valueOf(transactionFrame.getTxtQty().getText()));
+                dt.setPay(Integer.valueOf(transactionFrame.getTxtPrice().getText()));
+                dt.setCapital(qty * baseCapital);
+                
+                newT.setTotalCapital((qty * baseCapital));
+                newT.setTotalPay(Integer.valueOf(transactionFrame.getTxtPrice().getText()));
+                newT.setProfit(Integer.parseInt(transactionFrame.getTxtPrice().getText()) - (qty * baseCapital));
+                
+                Integer k = 0;
+                if(k == 0 && listDetailTransaction.size() > 0) {
+                    while(listDetailTransaction.get(k).getGoodsId() != Integer.valueOf(transactionFrame.getTxtGoodsId().getText())) {
+                        k++;
+                    }
+                    detailTransactionImplement.updateQty(listDetailTransaction.get(k));
+                } else {
+                    detailTransactionImplement.insert(dt);
+                }
+                    transactionImplement.update(newT);
+
+            } else {
+//                            JOptionPane.showMessageDialog(null, "ada transaksi sebelumnya");
+                DetailTransaction dt = new DetailTransaction();
+                Goods g = goodsImplement.getGood(Integer.valueOf(transactionFrame.getTxtGoodsId().getText()));
+                Integer baseCapital = g.getBuy();
+                dt.setTransactionId(t.getId());
+                dt.setGoodsId(Integer.valueOf(transactionFrame.getTxtGoodsId().getText()));
+                dt.setQty(Integer.valueOf(transactionFrame.getTxtQty().getText()));
+                dt.setPay(Integer.valueOf(transactionFrame.getTxtPrice().getText()));
+                dt.setCapital(qty * baseCapital);
+
+                t.setTotalCapital((qty * baseCapital));
+                t.setTotalPay(Integer.valueOf(transactionFrame.getTxtPrice().getText()));
+                t.setProfit(Integer.parseInt(transactionFrame.getTxtPrice().getText()) - (qty * baseCapital));
+
+                Integer k = 0;
+                if(k == 0) {
+                    while(listDetailTransaction.get(k).getGoodsId() != Integer.valueOf(transactionFrame.getTxtGoodsId().getText())) {
+                        k++;
+                    }
+                    detailTransactionImplement.updateQty(listDetailTransaction.get(k));
+                } else {
+                    detailTransactionImplement.insert(dt);
+                }
+                    transactionImplement.update(t);
+            }
+                
             
-            dt.setQty(Integer.valueOf(transactionFrame.getTxtQty().getText()));
-            dt.setPay(Integer.valueOf(transactionFrame.getTxtPrice().getText()));
-            dt.setCapital(qty * baseCapital);
-            
-            detailTransactionImplement.insert(dt);
-            JOptionPane.showMessageDialog(null, "Barang berhasil ditambahkan");
+//            JOptionPane.showMessageDialog(null, "Barang berhasil ditambahkan");
         }else {
             JOptionPane.showMessageDialog(transactionFrame, "Failed");
         }

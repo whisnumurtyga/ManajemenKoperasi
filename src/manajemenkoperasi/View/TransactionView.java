@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import manajemenkoperasi.Controller.GoodsController;
+import manajemenkoperasi.Controller.LoginController;
 import manajemenkoperasi.Controller.TransactionController;
 
 /**
@@ -28,7 +29,7 @@ public class TransactionView extends javax.swing.JFrame {
         txtGoodsName.setEnabled(false);
         txtGoodsId.setEnabled(false);
         transactionController = new TransactionController(this);
-//        JOptionPane.showMessageDialog(null, transactionController.getLoggedUser().getId());
+        JOptionPane.showMessageDialog(null, LoginController.userLogged.getId());
         transactionController.fillTableDetailTransaction();
         transactionController.fillTableGoods();
         
@@ -495,6 +496,8 @@ public class TransactionView extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
+        transactionController.insert();
+        transactionController.fillTableDetailTransaction();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
