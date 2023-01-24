@@ -24,6 +24,7 @@ public class TransactionView extends javax.swing.JFrame {
      */
     public TransactionView() {
         initComponents();
+//        pengganti komen haikal yang hilang
         txtUserId.setEnabled(false);
         txtPrice.setEnabled(false);
         txtGoodsName.setEnabled(false);
