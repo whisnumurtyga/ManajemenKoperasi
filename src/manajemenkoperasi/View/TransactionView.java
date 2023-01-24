@@ -94,6 +94,11 @@ public class TransactionView extends javax.swing.JFrame {
         btnBack.setBackground(new java.awt.Color(231, 8, 8));
         btnBack.setForeground(new java.awt.Color(255, 255, 255));
         btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         labelName2.setText("User Id");
 
@@ -144,6 +149,17 @@ public class TransactionView extends javax.swing.JFrame {
         txtPrice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPriceActionPerformed(evt);
+            }
+        });
+
+        txtQty.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtQtyFocusLost(evt);
+            }
+        });
+        txtQty.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txtQtyMouseExited(evt);
             }
         });
 
@@ -390,11 +406,6 @@ public class TransactionView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtGoodsNameActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        // TODO add your handling code here:
-    }                                            
-
     private void btnHistoryTransactionActionPerformed(java.awt.event.ActionEvent evt) {                                                      
         // TODO add your handling code here:
     }                                                     
@@ -413,42 +424,7 @@ public class TransactionView extends javax.swing.JFrame {
         // TODO add your handling code here:
         transactionController.fillForm(tableGoods.getSelectedRow());
     }//GEN-LAST:event_tableGoodsMouseClicked
-
-    private void txtQtyKeyTyped(java.awt.event.KeyEvent evt) {                                
-        // TODO add your handling code here:
-        //        if(Integer.valueOf(getTxtQty().getText())  != null) {
-            //            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
-            //        }
-        //         JOptionPane.showMessageDialog(null, "keyTyped : ");
-    }                               
-
-    private void txtQtyActionPerformed(java.awt.event.ActionEvent evt) {                                       
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "ada aksi");
-    }                                      
-
-    private void txtQtyMouseExited(java.awt.event.MouseEvent evt) {                                   
-        // TODO add your handling code here:
-        if(Integer.valueOf(getTxtQty().getText())  != null) {
-            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
-        }
-    }                                  
-
-    private void txtQtyFocusLost(java.awt.event.FocusEvent evt) {                                 
-        // TODO add your handling code here:
-        //         JOptionPane.showMessageDialog(null, "fokus lost : ");
-        if(Integer.valueOf(getTxtQty().getText())  != null) {
-            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
-        }
-    }                                
-
-    private void txtQtyMouseMoved(java.awt.event.MouseEvent evt) {                                  
-        // TODO add your handling code here:
-        if(Integer.valueOf(getTxtQty().getText())  != null) {
-            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
-        }
-    }                                 
-
+                        
     private void txtPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPriceActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPriceActionPerformed
@@ -466,6 +442,26 @@ public class TransactionView extends javax.swing.JFrame {
          transactionController.insert();
         transactionController.fillTableDetailTransaction();
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new DashboardView().setVisible(true);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void txtQtyMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtQtyMouseExited
+        // TODO add your handling code here:
+        if(Integer.valueOf(getTxtQty().getText())  != null) {
+            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
+        }
+    }//GEN-LAST:event_txtQtyMouseExited
+
+    private void txtQtyFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtQtyFocusLost
+        // TODO add your handling code here:
+        if(Integer.valueOf(getTxtQty().getText())  != null) {
+            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
+        }
+    }//GEN-LAST:event_txtQtyFocusLost
 
     /**
      * @param args the command line arguments

@@ -292,6 +292,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Back"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="labelName2">
               <Properties>
@@ -419,6 +422,10 @@
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtQty">
+              <Events>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtQtyFocusLost"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtQtyMouseExited"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="comboxCategory">
               <Properties>

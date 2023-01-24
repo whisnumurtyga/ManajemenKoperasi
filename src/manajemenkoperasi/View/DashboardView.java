@@ -157,6 +157,8 @@ public class DashboardView extends javax.swing.JFrame {
 
     private void btnInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformationActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
+        new MisView().setVisible(true);
     }//GEN-LAST:event_btnInformationActionPerformed
 
     /**
