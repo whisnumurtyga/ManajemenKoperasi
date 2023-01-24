@@ -24,8 +24,6 @@ public class TransactionView extends javax.swing.JFrame {
      */
     public TransactionView() {
         initComponents();
-//        pengganti komen youtube haikal yang hilang 
-//        tes update
         txtUserId.setEnabled(false);
         txtPrice.setEnabled(false);
         txtGoodsName.setEnabled(false);
@@ -453,39 +451,10 @@ public class TransactionView extends javax.swing.JFrame {
 
     private void txtQtyMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtQtyMouseExited
         // TODO add your handling code here:
-//        if(Integer.valueOf(getTxtQty().getText())  != null) {
-//            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
-//        }
         if(Integer.valueOf(getTxtQty().getText())  != null) {
             transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
-        }        if(Integer.valueOf(getTxtQty().getText())  != null) {
-            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
-        }        if(Integer.valueOf(getTxtQty().getText())  != null) {
-            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
         }
-        hahdiaisdohsaiodh (ini hapus coek) buat tes conflict aja ini
-                        if(Integer.valueOf(getTxtQty().getText())  != null) {
-            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
-        }        if(Integer.valueOf(getTxtQty().getText())  != null) {
-            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
-        }        if(Integer.valueOf(getTxtQty().getText())  != null) {
-            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
-        }        if(Integer.valueOf(getTxtQty().getText())  != null) {
-            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
-        }
-                putri cantik sekali
-                ajdkajdkajsdjsadjosa mueheeheheh
-                                if(Integer.valueOf(getTxtQty().getText())  != null) {
-            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
-        }        if(Integer.valueOf(getTxtQty().getText())  != null) {
-            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
-        }        if(Integer.valueOf(getTxtQty().getText())  != null) {
-            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
-        }        if(Integer.valueOf(getTxtQty().getText())  != null) {
-            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
-        }        if(Integer.valueOf(getTxtQty().getText())  != null) {
-            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
-        }
+       
     }//GEN-LAST:event_txtQtyMouseExited
 
     private void txtQtyFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtQtyFocusLost
