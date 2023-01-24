@@ -24,7 +24,8 @@ public class TransactionView extends javax.swing.JFrame {
      */
     public TransactionView() {
         initComponents();
-//        pengganti komen haikal yang hilang
+//        pengganti komen youtube haikal yang hilang 
+//        tes update
         txtUserId.setEnabled(false);
         txtPrice.setEnabled(false);
         txtGoodsName.setEnabled(false);
@@ -456,7 +457,7 @@ public class TransactionView extends javax.swing.JFrame {
 //            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
 //        }
         hahdiaisdohsaiodh (ini hapus coek) buat tes conflict aja ini
-                woaieoadoajopdjas
+                putri cantik sekali
                 ajdkajdkajsdjsadjosa mueheeheheh
     }//GEN-LAST:event_txtQtyMouseExited
 
