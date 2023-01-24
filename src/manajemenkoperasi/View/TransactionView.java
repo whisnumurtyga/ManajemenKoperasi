@@ -28,10 +28,12 @@ public class TransactionView extends javax.swing.JFrame {
         txtPrice.setEnabled(false);
         txtGoodsName.setEnabled(false);
         txtGoodsId.setEnabled(false);
+        txtTotalPay.setEnabled(false);
         transactionController = new TransactionController(this);
         JOptionPane.showMessageDialog(null, LoginController.userLogged.getId());
         transactionController.fillTableDetailTransaction();
         transactionController.fillTableGoods();
+        transactionController.setTotalPrice();
         
     }
 
@@ -496,6 +498,7 @@ public class TransactionView extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
+//                JOptionPane.showMessageDialog(null, "Ini tombol add");
         transactionController.insert();
         transactionController.fillTableDetailTransaction();
     }//GEN-LAST:event_btnAddActionPerformed

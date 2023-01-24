@@ -55,7 +55,7 @@ public class User {
         }
     }
 
-    public void setLevelId(Integer i) {
+    public void setLevel(Integer i) {
         this.levelId = i;
     }
     

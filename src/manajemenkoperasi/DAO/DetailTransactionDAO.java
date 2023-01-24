@@ -103,12 +103,11 @@ public class DetailTransactionDAO implements DetailTransactionImplement{
         return null;
     }    
     
-    public void updateQty(DetailTransaction dt) {
+    public void updateQty(DetailTransaction dt, Integer stock, Integer price, Integer capital) {
         java.sql.PreparedStatement statement = null;
+        JOptionPane.showMessageDialog(null, "New Stock = " + (stock+dt.getQty()));
         try{            
-            statement = (PreparedStatement) connection.prepareStatement("UPDATE detail_transactions SET qty=? WHERE id=? ;");
-            statement.setInt(1, dt.getQty());
-            statement.setInt(2, dt.getId());
+            statement = (PreparedStatement) connection.prepareStatement("UPDATE detail_transactions SET qty=" + (stock+dt.getQty()) +  ", pay=" + (price+dt.getPay()) + ",capital= " + (dt.getCapital()+capital) + " WHERE id=" + dt.getId() + " ;");
             statement.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();

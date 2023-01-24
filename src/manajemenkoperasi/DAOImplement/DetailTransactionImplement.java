@@ -15,7 +15,7 @@ public interface DetailTransactionImplement {
     public void insert(DetailTransaction d);
     public void update(DetailTransaction d);
     public void delete(Integer id);
-    public void updateQty(DetailTransaction dt);
+    public void updateQty(DetailTransaction dt, Integer stock, Integer price, Integer capital);
     
     public List<DetailTransaction> getAll(Integer transactionId);
     public List<DetailTransaction> get(Integer detailId);
