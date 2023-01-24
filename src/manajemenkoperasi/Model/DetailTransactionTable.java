@@ -57,6 +57,6 @@ public class DetailTransactionTable extends AbstractTableModel {
         }
         return "";
     }
-
+    
     
 }

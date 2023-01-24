@@ -57,6 +57,30 @@ public class DetailTransactionDAO implements DetailTransactionImplement{
         }
     }
     
+    @Override
+    public void delete(DetailTransaction dt) {
+        java.sql.PreparedStatement statement = null;
+        try{
+//                JOptionPane.showMessageDialog(null, dt.getTransactionId());
+//                JOptionPane.showMessageDialog(null, dt.getGoodsId());
+//                JOptionPane.showMessageDialog(null, dt.getQty());
+//                JOptionPane.showMessageDialog(null, dt.getCapital());
+//                JOptionPane.showMessageDialog(null, dt.getPay());
+                
+            statement = (java.sql.PreparedStatement) connection.prepareStatement("DELETE FROM detail_transactions WHERE id=" + dt.getId() + " ;");
+            statement.executeUpdate();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } 
+        finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
 
 
     @Override
@@ -64,10 +88,6 @@ public class DetailTransactionDAO implements DetailTransactionImplement{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public void delete(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     @Override
     public List<DetailTransaction> getAll(Integer userId) {

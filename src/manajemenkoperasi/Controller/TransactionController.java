@@ -188,4 +188,7 @@ public class TransactionController {
         JOptionPane.showMessageDialog(transactionFrame, "ini diluar if else");
         setTotalPrice();
     }
+
+    
+    
 }

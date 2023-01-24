@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import manajemenkoperasi.Controller.DetailTransactionController;
 import manajemenkoperasi.Controller.GoodsController;
 import manajemenkoperasi.Controller.LoginController;
 import manajemenkoperasi.Controller.TransactionController;
@@ -18,6 +19,7 @@ import manajemenkoperasi.Controller.TransactionController;
  */
 public class TransactionView extends javax.swing.JFrame {
     TransactionController transactionController;
+    DetailTransactionController detailTransactionController;
     GoodsController goodsController;
     /**
      * Creates new form TransactionView
@@ -29,8 +31,9 @@ public class TransactionView extends javax.swing.JFrame {
         txtGoodsName.setEnabled(false);
         txtGoodsId.setEnabled(false);
         txtTotalPay.setEnabled(false);
+        detailTransactionController = new DetailTransactionController(this);
         transactionController = new TransactionController(this);
-        JOptionPane.showMessageDialog(null, LoginController.userLogged.getId());
+//        JOptionPane.showMessageDialog(null, LoginController.userLogged.getId());
         transactionController.fillTableDetailTransaction();
         transactionController.fillTableGoods();
         transactionController.setTotalPrice();
@@ -105,6 +108,11 @@ public class TransactionView extends javax.swing.JFrame {
         btnDelete.setBackground(new java.awt.Color(231, 8, 8));
         btnDelete.setForeground(new java.awt.Color(255, 255, 255));
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnRefresh.setText("Refresh");
 
@@ -406,15 +414,7 @@ public class TransactionView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void btnHistoryTransactionActionPerformed(java.awt.event.ActionEvent evt) {                                                      
-        // TODO add your handling code here:
-    }                                                     
-
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {                                        
-        // TODO add your handling code here:
-    }                                       
-    // TODO add your handling code here:
-                                     
+   
 
     private void txtTotalPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalPayActionPerformed
         // TODO add your handling code here:
@@ -451,9 +451,9 @@ public class TransactionView extends javax.swing.JFrame {
 
     private void txtQtyMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtQtyMouseExited
         // TODO add your handling code here:
-        if(Integer.valueOf(getTxtQty().getText())  != null) {
-            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
-        }
+//        if(Integer.valueOf(getTxtQty().getText())  != null) {
+//            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
+//        }
        
     }//GEN-LAST:event_txtQtyMouseExited
 
@@ -463,6 +463,13 @@ public class TransactionView extends javax.swing.JFrame {
             transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
         }
     }//GEN-LAST:event_txtQtyFocusLost
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+//        detailTransactionController.delete(tableDetailTransaction.getSelectedRow());
+        detailTransactionController.delete(tableDetailTransaction.getSelectedRow());
+        transactionController.fillTableDetailTransaction();
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments

@@ -24,7 +24,7 @@ public class GoodsController {
     GoodsView goodsFrame;
     GoodsImplement goodsImplement;
     List <Goods> listGoods;
-    
+        
     
     public GoodsController(GoodsView goodsFrame) {
         this.goodsFrame = goodsFrame;
@@ -120,6 +120,7 @@ public class GoodsController {
         listGoods = goodsImplement.getGoods();
         GoodsTable goodsTable = new GoodsTable(listGoods);
         goodsFrame.getTableGoods().setModel(goodsTable);
+        
     }
      public void findGoodsTable() {
         listGoods = goodsImplement.getGood(goodsFrame.getTxtFindGoods().getText());

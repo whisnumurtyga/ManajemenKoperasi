@@ -14,7 +14,7 @@ import manajemenkoperasi.Model.DetailTransaction;
 public interface DetailTransactionImplement {
     public void insert(DetailTransaction d);
     public void update(DetailTransaction d);
-    public void delete(Integer id);
+    public void delete(DetailTransaction d);
     public void updateQty(DetailTransaction dt, Integer stock, Integer price, Integer capital);
     
     public List<DetailTransaction> getAll(Integer transactionId);
