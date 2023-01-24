@@ -222,7 +222,7 @@ public class UserDAO implements UserImplement{
                 u.setPassword(rs.getString("password").toCharArray());
                 u.setEmail(rs.getString("email"));
                 u.setStatusId(rs.getInt("status"));
-                u.setLevelId(rs.getInt("level_id"));
+                u.setLevel(rs.getInt("level_id"));
                 
                  listUser.add(u);
             }

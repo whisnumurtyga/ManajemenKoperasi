@@ -403,12 +403,7 @@ public class TransactionView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }                                       
     // TODO add your handling code here:
-
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {                                       
-        // TODO add your handling code here:
-        transactionController.insert();
-        transactionController.fillTableDetailTransaction();
-    }                                      
+                                     
 
     private void txtTotalPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalPayActionPerformed
         // TODO add your handling code here:
@@ -468,6 +463,8 @@ public class TransactionView extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
+         transactionController.insert();
+        transactionController.fillTableDetailTransaction();
     }//GEN-LAST:event_btnAddActionPerformed
 
     /**
