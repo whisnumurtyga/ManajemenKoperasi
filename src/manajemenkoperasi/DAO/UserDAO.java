@@ -189,4 +189,47 @@ public class UserDAO implements UserImplement{
         }
         return null;
     }
+      @Override
+    public List<User> filter(String level) { 
+        
+        int levelId = 0;
+        switch (level) {
+                case "Kasir magang":
+                    levelId = 3;
+                    break;
+                case "Kasir":
+                   levelId = 4;
+                    break;
+                case "admin":
+                    levelId = 2;
+                    break;
+                default:
+                    break;
+        }
+        List <User> listUser = null;
+        
+        
+        try{
+            listUser = new ArrayList<User>();                    
+         java.sql.PreparedStatement st = connection.prepareStatement("SELECT * FROM users  WHERE level_id =  '" + levelId + "';");
+            ResultSet rs = st.executeQuery();
+            
+            while(rs.next()) {
+                 User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setName(rs.getString("name"));
+                u.setUsername(rs.getString("username"));
+                u.setPassword(rs.getString("password").toCharArray());
+                u.setEmail(rs.getString("email"));
+                u.setStatusId(rs.getInt("status"));
+                u.setLevelId(rs.getInt("level_id"));
+                
+                 listUser.add(u);
+            }
+        } catch(SQLException e) {
+           
+            System.out.println(e);
+        } 
+        return listUser;
+    }
 }
