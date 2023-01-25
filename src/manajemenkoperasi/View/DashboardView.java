@@ -131,6 +131,7 @@ public class DashboardView extends javax.swing.JFrame {
         jLabel2.setBounds(0, 0, 730, 480);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserActionPerformed

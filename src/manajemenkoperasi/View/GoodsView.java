@@ -130,9 +130,9 @@ public class GoodsView extends javax.swing.JFrame {
 
         jLabel4.setText("Nama ");
 
-        jLabel5.setText("Category_id");
+        jLabel5.setText("Category");
 
-        jLabel6.setText("Supplier_id");
+        jLabel6.setText("Supplier");
 
         jLabel7.setText("Stock");
 
@@ -152,6 +152,8 @@ public class GoodsView extends javax.swing.JFrame {
             }
         });
 
+        btnClear.setBackground(new java.awt.Color(231, 8, 8));
+        btnClear.setForeground(new java.awt.Color(255, 255, 255));
         btnClear.setText("CLEAR");
         btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,6 +161,8 @@ public class GoodsView extends javax.swing.JFrame {
             }
         });
 
+        btnAdd.setBackground(new java.awt.Color(0, 153, 255));
+        btnAdd.setForeground(new java.awt.Color(255, 255, 255));
         btnAdd.setText("ADD");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,6 +170,8 @@ public class GoodsView extends javax.swing.JFrame {
             }
         });
 
+        btnEdit.setBackground(new java.awt.Color(0, 153, 255));
+        btnEdit.setForeground(new java.awt.Color(255, 255, 255));
         btnEdit.setText("EDIT");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,6 +179,8 @@ public class GoodsView extends javax.swing.JFrame {
             }
         });
 
+        btnDelete.setBackground(new java.awt.Color(231, 8, 8));
+        btnDelete.setForeground(new java.awt.Color(255, 255, 255));
         btnDelete.setText("DELETE");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,6 +199,8 @@ public class GoodsView extends javax.swing.JFrame {
 
         jLabel11.setText("EXP");
 
+        BoxFilter.setBackground(new java.awt.Color(51, 102, 255));
+        BoxFilter.setForeground(new java.awt.Color(255, 255, 255));
         BoxFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter ", "Snack", "Makanan", "Kudapan", "Gorangan", "Minuman", "ATK" }));
         BoxFilter.setToolTipText("");
         BoxFilter.addActionListener(new java.awt.event.ActionListener() {
@@ -199,6 +209,8 @@ public class GoodsView extends javax.swing.JFrame {
             }
         });
 
+        btnBack.setBackground(new java.awt.Color(231, 8, 8));
+        btnBack.setForeground(new java.awt.Color(255, 255, 255));
         btnBack.setText("BACK");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -265,9 +277,10 @@ public class GoodsView extends javax.swing.JFrame {
                                             .addComponent(btnRefresh)))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(207, 207, 207)
+                                .addComponent(btnDelete)
+                                .addGap(88, 88, 88)
                                 .addComponent(btnEdit)
-                                .addGap(69, 69, 69)
-                                .addComponent(btnDelete)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(28, 28, 28))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -357,6 +370,7 @@ public class GoodsView extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtFindGoodsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindGoodsActionPerformed

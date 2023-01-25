@@ -4,6 +4,7 @@
  */
 package manajemenkoperasi.View;
 
+import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -22,8 +23,9 @@ public class LoginView extends javax.swing.JFrame {
     public LoginView() {
         initComponents();
         loginController = new LoginController(this);
+       
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -136,6 +138,7 @@ public class LoginView extends javax.swing.JFrame {
         jLabel4.setBounds(0, 0, 850, 570);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed

@@ -77,9 +77,9 @@ public class GoodsController {
             g.setExp(tanggal1);
           
            goodsImplement.insert(g);
-            JOptionPane.showMessageDialog(goodsFrame,"Berhasil add user" );
+            JOptionPane.showMessageDialog(goodsFrame,"Sucessfully add Goods" );
         }else {
-            JOptionPane.showMessageDialog(goodsFrame, "Failed added User");
+            JOptionPane.showMessageDialog(goodsFrame, "Failed added Goods");
         }
         
     }
@@ -111,9 +111,9 @@ public class GoodsController {
             g.setId(Integer.valueOf(goodsFrame.getTxtIDG().getText()));
             
             goodsImplement.update(g);
-            JOptionPane.showMessageDialog(null, "Successfully update User");
+            JOptionPane.showMessageDialog(null, "Successfully update Goods");
         }else {
-            JOptionPane.showMessageDialog(goodsFrame, "Failed update User");
+            JOptionPane.showMessageDialog(goodsFrame, "Failed update Goods");
         }
     }    
      public void fillTable() {
