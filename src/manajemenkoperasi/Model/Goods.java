@@ -69,6 +69,9 @@ public class Goods {
     public void setCategoryId(Integer id) {
         this.categoryId = id;
     }
+    public Integer getSupplier_id() {
+        return supplier_id;
+    }
 
     public void setCategory(String Category) {
         switch (Category) {
@@ -127,18 +130,56 @@ public class Goods {
         }
     }
 
-    public String getSupplier() {
+  
+    public void setSupplier(String supplier) {
+       switch (supplier) {
+                case "Indomaret":
+                    this.supplier_id = 1;
+                    break;
+                case "Isatana roti":
+                    this.supplier_id= 2;
+                    break;
+                case "GorenganAsik":
+                    this.supplier_id = 3;
+                    break;
+                case "Gramedia":
+                    this.supplier_id = 4;
+                    break;
+                case "RM Jaya selalu":
+                    this.supplier_id = 5;
+                     break;
+                default:
+                    break;
+        }
+    }
+
+    
+      public String getSupplier() {
+         setSupplier(supplier_id);
         return supplier;
     }
 
-    public void setSupplier(String supplier) {
-        this.supplier = supplier;
+    public void setSupplier(int id) {
+         switch (id) {
+                case 1:
+                    this.supplier = "Indomaret";
+                    break;
+                case 2:
+                    this.supplier = "Istana roti";
+                    break;
+                case 3:
+                    this.supplier = "GorenganAsik";
+                    break;
+                case 4:
+                    this.supplier = "Gramedia";
+                    break;
+                case 5 :
+                    this.supplier= "RM Jaya selalu";
+                    break; 
+               default:
+                    break;
+        }
     }
-
-    public Integer getSupplier_id() {
-        return supplier_id;
-    }
-
     public void setSupplier_id(Integer supplier_id) {
         this.supplier_id = supplier_id;
     }

@@ -108,7 +108,7 @@ public class GoodsDAO implements GoodsImplement {
                 g.setId(rs.getInt("id"));
                 g.setName(rs.getString("name"));
                 g.setCategoryId(rs.getInt("category_id"));
-                g.setSupplier(rs.getString("supplier_id"));
+                g.setSupplier_id(rs.getInt("supplier_id"));
                 g.setStock(rs.getInt("stock"));
                 g.setBuy(rs.getInt("buy"));
                 g.setSell(rs.getInt("sell"));

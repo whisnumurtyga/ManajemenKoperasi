@@ -40,22 +40,22 @@ public class GoodsController {
         goodsFrame.getTxtIDG().setText(String.valueOf(listGoods.get(row).getId()));
         goodsFrame.getTxtNamaG().setText(listGoods.get(row).getName());
         goodsFrame.getBoxCategory().setSelectedItem(listGoods.get(row).getCategory());
-        goodsFrame.getTxtSupplier().setText(String.valueOf(listGoods.get(row).getSupplier()));
         goodsFrame.getTxtStock().setText(String.valueOf(listGoods.get(row).getStock()));
         goodsFrame.getTxtBuy().setText(String.valueOf(listGoods.get(row).getBuy()));
         goodsFrame.getTxtSell().setText(String.valueOf(listGoods.get(row).getSell()));   
+        goodsFrame.getBoxSupplier().setSelectedItem(listGoods.get(row).getSupplier());
     
           
     }
      public void clear() {
         goodsFrame.getTxtIDG().setText("");
         goodsFrame.getTxtNamaG().setText("");
-        goodsFrame.getTxtSupplier().setText("");
         goodsFrame.getTxtStock().setText("");
         goodsFrame.getTxtBuy().setText("");
         goodsFrame.getTxtSell().setText("");
         goodsFrame.getTxtDate().setDate(null);
         goodsFrame.getTxtEXP().setDate(null);
+         goodsFrame.getBoxSupplier().setSelectedItem("-- select supplier --");
         goodsFrame.getBoxCategory().setSelectedItem("-- select category --");
     }
       public void insert() {
@@ -68,11 +68,11 @@ public class GoodsController {
        
           Goods g = new Goods();
             g.setName(goodsFrame.getTxtNamaG().getText());
-            g.setSupplier_id(Integer.valueOf(goodsFrame.getTxtSupplier().getText()));
             g.setStock(Integer.valueOf(goodsFrame.getTxtStock().getText()));
             g.setSell(Integer.valueOf(goodsFrame.getTxtSell().getText()));
             g.setBuy(Integer.valueOf(goodsFrame.getTxtBuy().getText()));
             g.setCategory(goodsFrame.getBoxCategory().getSelectedItem().toString());
+            g.setSupplier(goodsFrame.getBoxSupplier().getSelectedItem().toString());
             g.setDate(tanggal);
             g.setExp(tanggal1);
           
@@ -104,7 +104,7 @@ public class GoodsController {
             g.setDate(tanggal);
             g.setExp(tanggal1);
             g.setCategory(goodsFrame.getBoxCategory().getSelectedItem().toString());
-            g.setSupplier_id(Integer.valueOf(goodsFrame.getTxtSupplier().getText()));
+            g.setSupplier(goodsFrame.getBoxSupplier().getSelectedItem().toString());
             g.setStock(Integer.valueOf(goodsFrame.getTxtStock().getText()));
             g.setBuy(Integer.valueOf(goodsFrame.getTxtBuy().getText()));
             g.setSell(Integer.valueOf(goodsFrame.getTxtSell().getText()));
