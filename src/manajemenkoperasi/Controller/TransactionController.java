@@ -79,6 +79,7 @@ public class TransactionController {
         }
     }
     
+    
     public void fillDynamicPrice(int row) { 
         Integer basePrice = listGoods.get(row).getSell();
         Integer newQty = Integer.valueOf(transactionFrame.getTxtQty().getText());

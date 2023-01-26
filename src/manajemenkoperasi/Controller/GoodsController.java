@@ -15,6 +15,7 @@ import manajemenkoperasi.Model.Goods;
 import manajemenkoperasi.View.GoodsView;
 import manajemenkoperasi.DAOImplement.GoodsImplement;
 import manajemenkoperasi.Model.GoodsTable;
+import manajemenkoperasi.View.TransactionView;
 
 /**
  *
@@ -22,12 +23,19 @@ import manajemenkoperasi.Model.GoodsTable;
  */
 public class GoodsController {
     GoodsView goodsFrame;
+    TransactionView transactionFrame;
     GoodsImplement goodsImplement;
     List <Goods> listGoods;
         
     
     public GoodsController(GoodsView goodsFrame) {
         this.goodsFrame = goodsFrame;
+        goodsImplement = new GoodsDAO();
+        listGoods= goodsImplement.getGoods();
+    }
+
+    public GoodsController(TransactionView transactionFrame) {
+        this.transactionFrame = transactionFrame;
         goodsImplement = new GoodsDAO();
         listGoods= goodsImplement.getGoods();
     }
@@ -119,17 +127,38 @@ public class GoodsController {
      public void fillTable() {
         listGoods = goodsImplement.getGoods();
         GoodsTable goodsTable = new GoodsTable(listGoods);
-        goodsFrame.getTableGoods().setModel(goodsTable);
+        
+        if(goodsFrame != null) {
+            goodsFrame.getTableGoods().setModel(goodsTable);
+        } 
+        
+        if(transactionFrame != null) {
+            transactionFrame.getTableGoods().setModel(goodsTable);
+        } 
         
     }
      public void findGoodsTable() {
-        listGoods = goodsImplement.getGood(goodsFrame.getTxtFindGoods().getText());
-       GoodsTable goodsTable = new GoodsTable(listGoods);
-        goodsFrame.getTableGoods().setModel(goodsTable);
+        if(goodsFrame != null) {
+            listGoods = goodsImplement.getGood(goodsFrame.getTxtFindGoods().getText());
+            GoodsTable goodsTable = new GoodsTable(listGoods);
+            goodsFrame.getTableGoods().setModel(goodsTable);
+        } 
+        if(transactionFrame != null) {
+            listGoods = goodsImplement.getGood(transactionFrame.getTxtFindGoodsName().getText());
+            GoodsTable goodsTable = new GoodsTable(listGoods);
+            transactionFrame.getTableGoods().setModel(goodsTable);
+        }
     }
      public void filter(){
-          listGoods = goodsImplement.filter(goodsFrame.getBoxFilter().getSelectedItem().toString());
-          GoodsTable goodsTable = new GoodsTable(listGoods);
-          goodsFrame.getTableGoods().setModel(goodsTable);
+          if(goodsFrame != null) {
+            listGoods = goodsImplement.filter(goodsFrame.getBoxFilter().getSelectedItem().toString());
+            GoodsTable goodsTable = new GoodsTable(listGoods);
+            goodsFrame.getTableGoods().setModel(goodsTable);
+          }
+          if(transactionFrame != null) {
+              listGoods = goodsImplement.filter(transactionFrame.getComboxCategory().getSelectedItem().toString());
+                GoodsTable goodsTable = new GoodsTable(listGoods);
+              transactionFrame.getTableGoods().setModel(goodsTable);
+          }
      }  
 }
