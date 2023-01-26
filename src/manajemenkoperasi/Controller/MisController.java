@@ -82,5 +82,6 @@ public class MisController {
           UserTable userTable = new UserTable(listUser);
           MisFrame.getTableUser().setModel(userTable);
      }  
+        
     
 }

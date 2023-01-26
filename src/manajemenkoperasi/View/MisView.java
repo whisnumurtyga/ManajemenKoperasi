@@ -9,13 +9,25 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import manajemenkoperasi.Controller.MisController;
+import org.jfree.data.category.DefaultCategoryDataset;
+import com.mysql.jdbc.Connection;
+import java.sql.*;
+import com.mysql.jdbc.PreparedStatement;
+import java.awt.Color;
+import manajemenkoperasi.Connection.UserConnection;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
  * @author ASUS
  */
 public class MisView extends javax.swing.JFrame {
-
+      Connection connection;
     /**
      * Creates new form MisView
      */
@@ -25,6 +37,7 @@ public class MisView extends javax.swing.JFrame {
          MisController = new MisController(this);
         MisController.fillTableGoods();
         MisController.fillTableUser();
+         connection = UserConnection.connection();
     }
 
     public JButton getSearchUser() {
@@ -76,6 +89,8 @@ public class MisView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        abstractOverlay1 = new org.jfree.chart.panel.AbstractOverlay();
+        areaRenderer1 = new org.jfree.chart.renderer.category.AreaRenderer();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TableGoods = new javax.swing.JTable();
@@ -96,6 +111,7 @@ public class MisView extends javax.swing.JFrame {
         BoxFilter = new javax.swing.JComboBox<>();
         BoxFilterUser = new javax.swing.JComboBox<>();
         btnBack = new javax.swing.JButton();
+        btnDiagram = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -205,29 +221,27 @@ public class MisView extends javax.swing.JFrame {
             }
         });
 
+        btnDiagram.setBackground(new java.awt.Color(0, 153, 255));
+        btnDiagram.setForeground(new java.awt.Color(255, 255, 255));
+        btnDiagram.setText("CHART");
+        btnDiagram.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDiagramActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(322, 322, 322))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnBack)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(187, 187, 187)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(299, 299, 299))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -239,7 +253,7 @@ public class MisView extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(BoxFilter, 0, 0, Short.MAX_VALUE)
                                     .addComponent(searchGoods, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 174, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -249,8 +263,23 @@ public class MisView extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(BoxFilterUser, 0, 0, Short.MAX_VALUE)
-                                    .addComponent(searchUser, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))))
-                        .addGap(68, 68, 68))))
+                                    .addComponent(searchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(31, 31, 31))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(247, 247, 247))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(193, 193, 193)
+                .addComponent(btnDiagram)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,7 +306,9 @@ public class MisView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnDiagram)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2)
@@ -346,6 +377,35 @@ public class MisView extends javax.swing.JFrame {
         new DashboardView().setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void btnDiagramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDiagramActionPerformed
+        // TODO add your handling code here:
+         DefaultPieDataset barChartData = new DefaultPieDataset();
+          try{
+           
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery("SELECT  categories.name,goods.stock\n" +
+                        "FROM goods,categories\n" +
+                        "WHERE goods.category_id = categories.id\n" +
+                        "GROUP BY categories.name;");      
+            while(rs.next()) {
+            int stock = rs.getInt("stock");
+            String category_name = rs.getString("name");
+            barChartData.setValue(category_name, stock);
+           
+            }
+//            JFreeChart chart =  ChartFactory.createPieChart("DATA BARANG", "category", "stock", barChartData, PlotOrientation.VERTICAL, false, true, false);
+            JFreeChart chart = ChartFactory.createPieChart("DATA BARANG", barChartData, false,true, false);
+          
+            ChartFrame frame = new ChartFrame("DIGARAM GOODS",chart);
+            frame.setVisible(true);
+            frame.setSize(700, 550);
+            frame.setLocationRelativeTo(null);
+        } catch(SQLException e) {
+            System.out.println(e);
+        } 
+      
+    }//GEN-LAST:event_btnDiagramActionPerformed
+
     public JComboBox<String> getBoxFilter() {
         return BoxFilter;
     }
@@ -411,7 +471,10 @@ public class MisView extends javax.swing.JFrame {
     private javax.swing.JTable TableGoods;
     private javax.swing.JTable TableTransaction;
     private javax.swing.JTable TableUser;
+    private org.jfree.chart.panel.AbstractOverlay abstractOverlay1;
+    private org.jfree.chart.renderer.category.AreaRenderer areaRenderer1;
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnDiagram;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
