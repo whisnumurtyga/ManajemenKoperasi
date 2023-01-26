@@ -189,6 +189,22 @@ public class TransactionController {
         JOptionPane.showMessageDialog(transactionFrame, "ini diluar if else");
         setTotalPrice();
     }
+    
+    public void delete() {
+        String response = JOptionPane.showInputDialog("cancel will be delete your all order ! \n type 'cancel' to confirm");
+        if(response != null && response.toLowerCase().equals("cancel")) {
+            if(listDetailTransaction != null) {
+                detailTransactionImplement.deleteAll(listDetailTransaction);
+                transactionImplement.delete(listDetailTransaction.get(0).getTransactionId());
+                fillTableDetailTransaction();
+                transactionFrame.getTxtTotalPay().setText("0");
+            } else {
+                JOptionPane.showMessageDialog(transactionFrame, "list order is empty");
+            }
+        } else {
+            JOptionPane.showMessageDialog(transactionFrame, "failed confirm to delete");
+        }
+    }
 
     
     

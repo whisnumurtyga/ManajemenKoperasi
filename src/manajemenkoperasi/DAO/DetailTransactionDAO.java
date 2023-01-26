@@ -61,12 +61,6 @@ public class DetailTransactionDAO implements DetailTransactionImplement{
     public void delete(DetailTransaction dt) {
         java.sql.PreparedStatement statement = null;
         try{
-//                JOptionPane.showMessageDialog(null, dt.getTransactionId());
-//                JOptionPane.showMessageDialog(null, dt.getGoodsId());
-//                JOptionPane.showMessageDialog(null, dt.getQty());
-//                JOptionPane.showMessageDialog(null, dt.getCapital());
-//                JOptionPane.showMessageDialog(null, dt.getPay());
-                
             statement = (java.sql.PreparedStatement) connection.prepareStatement("DELETE FROM detail_transactions WHERE id=" + dt.getId() + " ;");
             statement.executeUpdate();
         } catch(Exception e) {
@@ -162,6 +156,17 @@ public class DetailTransactionDAO implements DetailTransactionImplement{
             System.out.println(e);
         }
         return null;
+    }
+
+    @Override
+    public void deleteAll(List<DetailTransaction> dts) {
+        java.sql.PreparedStatement statement = null;
+        try{
+            statement = (java.sql.PreparedStatement) connection.prepareStatement("DELETE FROM detail_transactions WHERE transaction_id=" + dts.get(0).getTransactionId() + " ;");
+            statement.executeUpdate();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } 
     }
     
     

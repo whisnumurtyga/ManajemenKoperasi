@@ -44,4 +44,12 @@ public class DetailTransactionController {
             JOptionPane.showMessageDialog(transactionFrame, "Failed to delete");
         }
     }
+    
+    public void deleteAll(List<DetailTransaction> dt) {
+        if(dt == null) {
+            JOptionPane.showMessageDialog(transactionFrame, "List Order is Empty");
+        } else {
+                detailTransactionImplement.deleteAll(dt);
+        }
+    }
 }

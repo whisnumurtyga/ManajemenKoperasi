@@ -14,6 +14,7 @@ import manajemenkoperasi.Model.User;
 public interface TransactionImplement {
     public void insert(Transaction t);
     public void update(Transaction t);
+    public void delete(Integer transactionId);
     
     public Transaction get(Integer userId);
 }

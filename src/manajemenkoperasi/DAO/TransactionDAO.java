@@ -80,4 +80,22 @@ public class TransactionDAO implements TransactionImplement  {
         }
     }
 
+    @Override
+    public void delete(Integer transactionId) {
+        java.sql.PreparedStatement statement = null;
+        try{
+            statement = (java.sql.PreparedStatement) connection.prepareStatement("DELETE FROM transactions WHERE id=" + transactionId + " ;");
+            statement.executeUpdate();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } 
+        finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }
