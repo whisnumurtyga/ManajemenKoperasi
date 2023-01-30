@@ -110,84 +110,92 @@ public class TransactionController {
             Integer txtGoodsId = Integer.valueOf(transactionFrame.getTxtGoodsId().getText());
             Integer userId = Integer.valueOf(transactionFrame.getTxtUserId().getText());
         
-            Transaction t = transactionImplement.get(Integer.valueOf(transactionFrame.getTxtUserId().getText()));
+            Transaction t = transactionImplement.get(userId);
+//            if(t == null) {
+//                JOptionPane.showMessageDialog(null, "t null ");
+//            } else {
+//                JOptionPane.showMessageDialog(null, "t id = " + t.getId());
+//                JOptionPane.showMessageDialog(null, "t capital = " + t.getTotalCapital());
+//                JOptionPane.showMessageDialog(null, "t pay = " + t.getTotalPay());
+//                JOptionPane.showMessageDialog(null, "t status = " + t.getStatus());                
+//                
+//            }
+
             
+            //                Cari harga modal barang dari table goods
+
+            Goods g = goodsImplement.getGood(txtGoodsId);
+            Integer baseCapital = g.getBuy();
+                
             if(t == null) {
-//                JOptionPane.showMessageDialog(null, listDetailTransaction.size());
+//                Jika transaksi kosong buat baru dulu
                 Transaction newT = new Transaction();
                 newT.setUserId(userId);
                 newT.setStatus(0);
                 transactionImplement.insert(newT);
-                
+                newT.setId( transactionImplement.get(userId).getId());
+                JOptionPane.showMessageDialog(null, "transaksi kosong dan buat transaksi baru");
+                //                Buat model detail transaksi
                 DetailTransaction dt = new DetailTransaction();
-                Goods g = goodsImplement.getGood(txtGoodsId);
-                Integer baseCapital = g.getBuy();
-                
                 dt.setTransactionId(newT.getId());
                 dt.setGoodsId(txtGoodsId);
                 dt.setQty(txtQty);
                 dt.setPay(txtPrice);
                 dt.setCapital(txtQty * baseCapital);
-                
-                newT.setTotalCapital((txtQty * baseCapital));
-                newT.setTotalPay(Integer.valueOf(transactionFrame.getTxtPrice().getText()));
-                newT.setProfit(Integer.parseInt(transactionFrame.getTxtPrice().getText()) - (txtQty * baseCapital));
-                
-                Integer k = 0;
-                Integer flag = 0;
-                if(listDetailTransaction.size() > 0) {
-                    while(k < listDetailTransaction.size()) {
-                        if(listDetailTransaction.get(k).getGoodsId() ==  Integer.valueOf(transactionFrame.getTxtGoodsId().getText())) {  
-                            Integer capital = listDetailTransaction.get(k).getCapital()/ listDetailTransaction.get(k).getQty(); 
-                            detailTransactionImplement.updateQty(listDetailTransaction.get(k), txtQty, txtPrice, (capital * txtQty));
-                            flag = 1;
-                        }
-                        k++;
-                    }
-                }
-                if(flag == 0) {
-                    detailTransactionImplement.insert(dt);
-                }
-                transactionImplement.update(newT);
-                JOptionPane.showMessageDialog(null, "Barang berhasil ditambahkan");
-            }else {
-                JOptionPane.showMessageDialog(null, listDetailTransaction.size());
+                detailTransactionImplement.insert(dt);
+                transactionImplement.update(newT, dt);
+                JOptionPane.showMessageDialog(null, "item has been added");
+            } else {
+                //                Buat model detail transaksi
                 DetailTransaction dt = new DetailTransaction();
-                Goods g = goodsImplement.getGood(Integer.valueOf(transactionFrame.getTxtGoodsId().getText()));
-                Integer baseCapital = g.getBuy();
                 dt.setTransactionId(t.getId());
-                dt.setGoodsId(Integer.valueOf(transactionFrame.getTxtGoodsId().getText()));
+                dt.setGoodsId(txtGoodsId);
                 dt.setQty(txtQty);
-                dt.setPay(Integer.valueOf(transactionFrame.getTxtPrice().getText()));
+                dt.setPay(txtPrice);
                 dt.setCapital(txtQty * baseCapital);
-
-                t.setTotalCapital((txtQty * baseCapital));
-                t.setTotalPay(Integer.valueOf(transactionFrame.getTxtPrice().getText()));
-                t.setProfit(Integer.parseInt(transactionFrame.getTxtPrice().getText()) - (txtQty * baseCapital));
-
-                Integer k = 0;
-                Integer flag = 0;
-                if(listDetailTransaction.size() > 0) {
+                //                jika detail transaksi kosong
+                if(listDetailTransaction.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "transaksi ada dan detail transaksi tidak kosong");
+                    detailTransactionImplement.insert(dt);
+                } else {
+//                    jika detail transaksi tidak kosong
+//                    cek apakah goods id yg diadd ada pada list detail transaksi
+                    Integer k = 0;
+                    Integer flag = 0;
                     while(k < listDetailTransaction.size()) {
-                        if(listDetailTransaction.get(k).getGoodsId() ==  Integer.valueOf(transactionFrame.getTxtGoodsId().getText())) {             Integer capital = listDetailTransaction.get(k).getCapital()/ listDetailTransaction.get(k).getQty();
-                            detailTransactionImplement.updateQty(listDetailTransaction.get(k), txtQty, txtPrice, (capital * txtQty));
+//                        Jika ada goods yang sama maka cukup update qty, pay, dan capital
+                        if(listDetailTransaction.get(k).getGoodsId() ==  txtGoodsId) {  
+//                            DetailTransaction dt, Integer stock, Integer price, Integer capital
+                            DetailTransaction oldDt = detailTransactionImplement.getDetailTransaction(listDetailTransaction.get(k).getId());
+//                            JOptionPane.showMessageDialog(null, "now qty : " + dt.getQty());
+                            dt.setId(oldDt.getId());
+                            dt.setCapital(dt.getCapital()+oldDt.getCapital());
+                            dt.setPay(dt.getPay()+oldDt.getPay());
+                            dt.setQty(dt.getQty()+oldDt.getQty());
+//                            JOptionPane.showMessageDialog(null, "old qty : " + oldDt.getQty());
+//                            JOptionPane.showMessageDialog(null, "new qty : " + dt.getQty());
+                            detailTransactionImplement.update(dt);
+                            transactionImplement.update(t, dt);
                             flag = 1;
+                        }
+                            //                        jika tidak ad goods yang sama maka kita insert
+                        else if(k == (listDetailTransaction.size()-1) && flag == 0) {
+                                detailTransactionImplement.insert(dt);
+                                transactionImplement.update(t, dt);
+                                flag = 1;
                         }
                         k++;
                     }
-                } 
-                if(flag == 0) {
-                    detailTransactionImplement.insert(dt);
+                    if(flag == 0) {
+                      detailTransactionImplement.insert(dt);  
+                      transactionImplement.update(t, dt);
+                    }
+                    
+                    JOptionPane.showMessageDialog(null, "item has been added");
                 }
-                transactionImplement.update(t);
-                JOptionPane.showMessageDialog(null, "Barang berhasil ditambahkan");
             }
-        } else {
-                JOptionPane.showMessageDialog(transactionFrame, "Failed");
         }
-        
-        JOptionPane.showMessageDialog(transactionFrame, "ini diluar if else");
-        setTotalPrice();
+
     }
     
     public void delete() {
@@ -204,6 +212,24 @@ public class TransactionController {
         } else {
             JOptionPane.showMessageDialog(transactionFrame, "failed confirm to delete");
         }
+    }
+    
+    public void confirm() {
+        Transaction t = transactionImplement.get(Integer.valueOf(transactionFrame.getTxtUserId().getText()));
+        String response = JOptionPane.showInputDialog("make sure buyer give the money first ! \ntype 'confirm' to confirm");
+        if(response != null && response.toLowerCase().equals("confirm")) {
+            if(listDetailTransaction != null && t != null) {
+                t.setPaymentId(transactionFrame.getComboxPayment().getSelectedItem().toString());
+                transactionImplement.updateDone(t);
+                fillTableDetailTransaction();
+                transactionFrame.getTxtTotalPay().setText("0");
+                JOptionPane.showMessageDialog(transactionFrame, "Transaction Complete");
+            } else {
+                JOptionPane.showMessageDialog(transactionFrame, "list order is empty");
+            }
+        } else {
+            JOptionPane.showMessageDialog(transactionFrame, "failed confirm to delete");
+        } 
     }
 
     

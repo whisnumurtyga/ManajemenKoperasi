@@ -11,6 +11,8 @@ import static manajemenkoperasi.Connection.UserConnection.connection;
 import manajemenkoperasi.DAOImplement.TransactionImplement;
 import manajemenkoperasi.Model.Transaction;
 import java.sql.*;
+import java.util.List;
+import manajemenkoperasi.Model.DetailTransaction;
 
 /**
  *
@@ -32,6 +34,12 @@ public class TransactionDAO implements TransactionImplement  {
             while(rs.next()) {
                 Transaction t = new Transaction();
                 t.setId(rs.getInt("id"));
+                t.setUserId(rs.getInt("user_id"));
+                t.setStatus(rs.getInt("status"));
+                t.setTotalPay(rs.getInt("total_pay"));
+                t.setTotalCapital(rs.getInt("total_capital"));
+                t.setProfit(rs.getInt("profit"));
+                t.setPayment(rs.getInt("payment_id"));
                 return t;
             }
         } catch(SQLException e) {
@@ -60,14 +68,26 @@ public class TransactionDAO implements TransactionImplement  {
     }
 
     @Override
-    public void update(Transaction t) {
-        PreparedStatement statement = null;
+    public void update(Transaction t, DetailTransaction dt) {
+         java.sql.PreparedStatement statement = null;
         try{
-            statement = (PreparedStatement) connection.prepareStatement("UPDATE transactions SET total_pay=?, total_capital=?, profit=?, payment_id=1 WHERE id=? ;");
-            statement.setInt(1, t.getTotalPay());
-            statement.setInt(2, t.getTotalCapital());
-            statement.setInt(3, t.getProfit());
-            statement.setInt(4, t.getId());
+                statement = (java.sql.PreparedStatement) connection.prepareStatement("UPDATE transactions SET total_pay=" + (t.getTotalPay() + dt.getPay()) + ", total_capital=" + (t.getTotalCapital()+dt.getCapital()) + ", profit=" + (t.getProfit() + (dt.getPay()-dt.getCapital())) + " WHERE id=" + t.getId() + " ;");
+            statement.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    public void updateQty(Transaction t, DetailTransaction dt) {
+                 java.sql.PreparedStatement statement = null;
+        try{
+                statement = (java.sql.PreparedStatement) connection.prepareStatement("UPDATE transactions SET total_pay=" + (t.getTotalPay() + dt.getPay()) + ", total_capital=" + (t.getTotalCapital()+dt.getCapital()) + ", profit=" + (t.getProfit() + (dt.getPay()-dt.getCapital())) + " WHERE id=" + t.getId() + " ;");
             statement.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();
@@ -97,5 +117,42 @@ public class TransactionDAO implements TransactionImplement  {
             }
         }
     }
+
+    @Override
+    public void store(Transaction t) {
+        java.sql.PreparedStatement statement = null;
+        try{
+            statement = (java.sql.PreparedStatement) connection.prepareStatement("SET t.payment_id= " + t.getPaymentId() + ", t.date= NOW(), t.totalPay = " + t.getTotalPay() + ", t.totalCapital= " + t.getTotalCapital() + ", t.profit= " + t.getProfit() + " FROM transactions t WHERE id=" + t.getId() + " ;");
+            statement.executeUpdate();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } 
+        finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void updateDone(Transaction t) {
+         java.sql.PreparedStatement statement = null;
+        try{
+                statement = (java.sql.PreparedStatement) connection.prepareStatement("UPDATE transactions SET status=1, payment_id= " + t.getPaymentId() + " WHERE id=" + t.getId() + " ;");
+            statement.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    
 
 }

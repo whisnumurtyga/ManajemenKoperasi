@@ -42,6 +42,14 @@ public class TransactionView extends javax.swing.JFrame {
         
     }
 
+    public JComboBox<String> getComboxPayment() {
+        return comboxPayment;
+    }
+
+    public void setComboxPayment(JComboBox<String> comboxPayment) {
+        this.comboxPayment = comboxPayment;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -83,6 +91,8 @@ public class TransactionView extends javax.swing.JFrame {
         btnHistoryTransaction = new javax.swing.JButton();
         labelUsername2 = new javax.swing.JLabel();
         txtGoodsName = new javax.swing.JTextField();
+        labelPassword3 = new javax.swing.JLabel();
+        comboxPayment = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1311, 756));
@@ -250,6 +260,11 @@ public class TransactionView extends javax.swing.JFrame {
 
         labelUsername2.setText("G Name");
 
+        labelPassword3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelPassword3.setText("Payment");
+
+        comboxPayment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cash", "QRIS", "E-money", "Bank" }));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -313,14 +328,17 @@ public class TransactionView extends javax.swing.JFrame {
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
-                        .addComponent(labelPassword1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelPassword3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelPassword1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(28, 28, 28)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(78, 78, 78)
                                 .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtTotalPay, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtTotalPay)
+                            .addComponent(comboxPayment, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(59, 59, 59))
         );
         jPanel2Layout.setVerticalGroup(
@@ -387,7 +405,10 @@ public class TransactionView extends javax.swing.JFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtTotalPay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(labelPassword1))
-                                .addGap(83, 83, 83))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(labelPassword3)
+                                    .addComponent(comboxPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGap(73, 73, 73)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -456,8 +477,10 @@ public class TransactionView extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-         transactionController.insert();
+        
+        transactionController.insert();
         transactionController.fillTableDetailTransaction();
+        transactionController.setTotalPrice();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -468,9 +491,9 @@ public class TransactionView extends javax.swing.JFrame {
 
     private void txtQtyMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtQtyMouseExited
         // TODO add your handling code here:
-//        if(Integer.valueOf(getTxtQty().getText())  != null) {
-//            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
-//        }
+        if(Integer.valueOf(getTxtQty().getText())  != null) {
+            transactionController.fillDynamicPrice(tableGoods.getSelectedRow());
+        }
        
     }//GEN-LAST:event_txtQtyMouseExited
 
@@ -495,6 +518,7 @@ public class TransactionView extends javax.swing.JFrame {
 
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
         // TODO add your handling code here:
+        transactionController.confirm();
     }//GEN-LAST:event_btnConfirmActionPerformed
 
     private void comboxCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboxCategoryActionPerformed
@@ -559,6 +583,7 @@ public class TransactionView extends javax.swing.JFrame {
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnSearch;
     private javax.swing.JComboBox<String> comboxCategory;
+    private javax.swing.JComboBox<String> comboxPayment;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -570,6 +595,7 @@ public class TransactionView extends javax.swing.JFrame {
     private javax.swing.JLabel labelName2;
     private javax.swing.JLabel labelPassword1;
     private javax.swing.JLabel labelPassword2;
+    private javax.swing.JLabel labelPassword3;
     private javax.swing.JLabel labelUsername1;
     private javax.swing.JLabel labelUsername2;
     private javax.swing.JTable tableDetailTransaction;

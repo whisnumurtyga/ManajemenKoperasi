@@ -4,6 +4,8 @@
  */
 package manajemenkoperasi.DAOImplement;
 
+import java.util.List;
+import manajemenkoperasi.Model.DetailTransaction;
 import manajemenkoperasi.Model.Transaction;
 import manajemenkoperasi.Model.User;
 
@@ -13,8 +15,11 @@ import manajemenkoperasi.Model.User;
  */
 public interface TransactionImplement {
     public void insert(Transaction t);
-    public void update(Transaction t);
+    public void update(Transaction t, DetailTransaction dt);
+    public void updateQty(Transaction t, DetailTransaction dt);
     public void delete(Integer transactionId);
+    public void store(Transaction t);
+    public void updateDone(Transaction t);
     
     public Transaction get(Integer userId);
 }

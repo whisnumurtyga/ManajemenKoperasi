@@ -79,7 +79,24 @@ public class DetailTransactionDAO implements DetailTransactionImplement{
 
     @Override
     public void update(DetailTransaction d) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//        JOptionPane.showMessageDialog(null, d.getId());
+        JOptionPane.showMessageDialog(null, "db id : " + d.getId());
+        JOptionPane.showMessageDialog(null, "db qty : " + d.getQty());
+//        JOptionPane.showMessageDialog(null, d.getPay());
+//        JOptionPane.showMessageDialog(null, d.getCapital());
+        java.sql.PreparedStatement statement = null;
+        try{            
+            statement = (PreparedStatement) connection.prepareStatement("UPDATE detail_transactions SET qty=" + d.getQty() +  ", pay=" + d.getPay() + ",capital= " + d.getCapital() + " WHERE id=" + d.getId() + " ;");
+            statement.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
@@ -135,10 +152,9 @@ public class DetailTransactionDAO implements DetailTransactionImplement{
     }
     
     public DetailTransaction getDetailTransaction(Integer dtId) {
-
         try{        
-            PreparedStatement st = (PreparedStatement) connection.prepareStatement("SELECT * FROM detail_transactions dt WHERE dt.id=" + dtId + ";");
-            ResultSet rs = st.executeQuery();
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM detail_transactions dt WHERE dt.id=" + dtId + " LIMIT 1;");
             
             while(rs.next()) {           
                 DetailTransaction dt = new DetailTransaction();
