@@ -383,19 +383,14 @@ public class MisView extends javax.swing.JFrame {
           try{
            
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT  categories.name,goods.stock\n" +
-                        "FROM goods,categories\n" +
-                        "WHERE goods.category_id = categories.id\n" +
-                        "GROUP BY categories.name;");      
+            ResultSet rs = st.executeQuery("SELECT  categories.name,SUM(goods.stock) AS stock FROM goods,categories WHERE goods.category_id = categories.id GROUP BY categories.name;");      
             while(rs.next()) {
             int stock = rs.getInt("stock");
             String category_name = rs.getString("name");
-            barChartData.setValue(category_name, stock);
-           
+            barChartData.setValue(category_name, Integer.valueOf(stock));
             }
-//            JFreeChart chart =  ChartFactory.createPieChart("DATA BARANG", "category", "stock", barChartData, PlotOrientation.VERTICAL, false, true, false);
-            JFreeChart chart = ChartFactory.createPieChart("DATA BARANG", barChartData, false,true, false);
-          
+            JFreeChart chart = ChartFactory.createPieChart3D("DATA BARANG", barChartData, true,true, true);
+           
             ChartFrame frame = new ChartFrame("DIGARAM GOODS",chart);
             frame.setVisible(true);
             frame.setSize(700, 550);
