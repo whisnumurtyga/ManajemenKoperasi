@@ -154,6 +154,7 @@ public class DashboardView extends javax.swing.JFrame {
         transactionView.setLocationRelativeTo(null);
         transactionView.setVisible(true);
         
+//        new TransactionView().setVisible(true);
     }//GEN-LAST:event_btnTransactionActionPerformed
 
     private void btnInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformationActionPerformed

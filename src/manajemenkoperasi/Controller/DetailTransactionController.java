@@ -34,8 +34,14 @@ public class DetailTransactionController {
     }
     
     public void delete(Integer row) {
-//        JOptionPane.showMessageDialog(null, listDetailTransaction.get(row));
+        listDetailTransaction = detailTransactionImplement.getAll(LoginController.userLogged.getId());
+        Integer i = 0;
+        while(i < listDetailTransaction.size()) {
+            JOptionPane.showMessageDialog(null, listDetailTransaction.get(i).getId());
+            i++;
+        }
         DetailTransaction dt = listDetailTransaction.get(row);
+//        JOptionPane.showMessageDialog(null, dt.getId());
         
         if(dt != null){ 
             detailTransactionImplement.delete(dt);    

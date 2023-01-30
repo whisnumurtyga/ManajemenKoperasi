@@ -37,7 +37,7 @@ public class GoodsController {
     public GoodsController(TransactionView transactionFrame) {
         this.transactionFrame = transactionFrame;
         goodsImplement = new GoodsDAO();
-        listGoods= goodsImplement.getGoods();
+        listGoods = goodsImplement.getGoods();
     }
      public void fillform(int row) throws ParseException {    
          

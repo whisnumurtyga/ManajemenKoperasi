@@ -505,9 +505,9 @@ public class TransactionView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtQtyFocusLost
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
-//        detailTransactionController.delete(tableDetailTransaction.getSelectedRow());
+        // TODO add your handling code here
         detailTransactionController.delete(tableDetailTransaction.getSelectedRow());
+        JOptionPane.showMessageDialog(null, tableDetailTransaction.getSelectedRow());
         transactionController.fillTableDetailTransaction();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
