@@ -232,4 +232,30 @@ public class UserDAO implements UserImplement{
         } 
         return listUser;
     }
+
+    @Override
+    public User get(Integer id) {
+        User u = new User();
+        try{
+                    
+            PreparedStatement st = connection.prepareStatement("SELECT * FROM users u WHERE u.id=" + id + ";");
+            ResultSet rs = st.executeQuery();
+            
+            while(rs.next()) {
+                
+                u.setId(rs.getInt("id"));
+                u.setName(rs.getString("name"));
+                u.setUsername(rs.getString("username"));
+                u.setPassword(rs.getString("password").toCharArray());
+                u.setEmail(rs.getString("email"));
+                u.setStatusId(rs.getInt("status"));
+                u.setLevel(rs.getInt("level_id"));
+            return u;
+            }
+        } catch(SQLException e) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE,null, e);
+            System.out.println(e);
+        }
+        return u;
+    }
 }

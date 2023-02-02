@@ -20,6 +20,18 @@ import manajemenkoperasi.Model.Transaction;
 import manajemenkoperasi.Model.User;
 import manajemenkoperasi.View.TransactionView;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import manajemenkoperasi.DAO.UserDAO;
+import manajemenkoperasi.DAOImplement.UserImplement;
+import org.json.JSONObject;
+
 /**
  *
  * @author whisn
@@ -31,7 +43,9 @@ public class TransactionController {
     GoodsImplement goodsImplement;
     List <Goods> listGoods;
     List <DetailTransaction> listDetailTransaction;
-    
+    Integer sendInvoice = 0;
+    UserImplement userImplement;
+
     public TransactionController(TransactionView transactionFrame) {
         this.transactionFrame = transactionFrame;
         transactionImplement = new TransactionDAO();
@@ -40,6 +54,8 @@ public class TransactionController {
         detailTransactionImplement = new DetailTransactionDAO();
         listDetailTransaction = detailTransactionImplement.getAll(LoginController.userLogged.getId());
         listDetailTransaction.size();
+        userImplement = new UserDAO();
+        
     }
     
     public void fillTableDetailTransaction() {
@@ -216,9 +232,17 @@ public class TransactionController {
     
     public void confirm() {
         Transaction t = transactionImplement.get(Integer.valueOf(transactionFrame.getTxtUserId().getText()));
-        String response = JOptionPane.showInputDialog("make sure buyer give the money first ! \ntype 'confirm' to confirm");
+        String response = null;
+        
+        if(sendInvoice == 0) {
+            response = JOptionPane.showInputDialog("make sure buyer give the money first ! \ntype 'confirm' to confirm");
+        }
+        
         if(response != null && response.toLowerCase().equals("confirm")) {
             if(listDetailTransaction != null && t != null) {
+                for(Integer i = 0; i < listDetailTransaction.size(); i++) {
+                    goodsImplement.updateQty(listDetailTransaction.get(i).getGoodsId(), listDetailTransaction.get(i).getQty());
+                }
                 t.setPaymentId(transactionFrame.getComboxPayment().getSelectedItem().toString());
                 transactionImplement.updateDone(t);
                 fillTableDetailTransaction();
@@ -227,11 +251,92 @@ public class TransactionController {
             } else {
                 JOptionPane.showMessageDialog(transactionFrame, "list order is empty");
             }
+        } else if(sendInvoice == 1) {
+            if(listDetailTransaction != null && t != null) {
+                for(Integer i = 0; i < listDetailTransaction.size(); i++) {
+                    goodsImplement.updateQty(listDetailTransaction.get(i).getGoodsId(), listDetailTransaction.get(i).getQty());
+                }
+                t.setPaymentId(transactionFrame.getComboxPayment().getSelectedItem().toString());
+                transactionImplement.updateDone(t);
+                fillTableDetailTransaction();
+                transactionFrame.getTxtTotalPay().setText("0");
+                JOptionPane.showMessageDialog(transactionFrame, "Transaction Complete");
+            } else {
+                JOptionPane.showMessageDialog(transactionFrame, "list order is empty");
+            }  
         } else {
             JOptionPane.showMessageDialog(transactionFrame, "failed confirm to delete");
         } 
     }
+    
+    public void sendInvoice(){
+        try {
+            String response = JOptionPane.showInputDialog("type buyer whatsapp number to receive invoice \nSystem will be make Order Confirmed, make sure buyer give the money first !");
+            listDetailTransaction = detailTransactionImplement.getAll(LoginController.userLogged.getId());
+            Transaction t = transactionImplement.get(LoginController.userLogged.getId());
+            if(response != null){
+                call_me(listDetailTransaction, response, t);
+            }
+            JOptionPane.showMessageDialog(transactionFrame, "Invoice Sent Successfully");
+            sendInvoice = 1;
+            confirm();
+            fillTableGoods();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void call_me(List <DetailTransaction> dts, String no, Transaction t) throws Exception{
+        String payment = transactionFrame.getComboxPayment().getSelectedItem().toString();
+        String handledBy = userImplement.get(t.getUserId()).getName();
+        URL url = new URL("http://localhost:8000/send-message");
+	
+        String invoice = "-== KOPERASI BRIZZI ==-\n\nOrder ID : " + t.getId() + "\nHandled By : " + handledBy + "\n\n";
+        Integer total = 0;
+        for(Integer i = 0; i < dts.size(); i++) {
+            total += dts.get(i).getPay(); 
+            String detailOrder = String.format("%d. %s - %d - %d \n", (i+1),dts.get(i).getGoodsName(), dts.get(i).getQty(), dts.get(i).getPay()); 
+            invoice += detailOrder;
+        }
+        
+        Map<String, Object> params = new LinkedHashMap<>();
+	params.put("message", invoice + "\nTotal Bayar: " + total + "\nMetode Pembayaran : " + payment + "\n\nTerimakasih...");
+        params.put("number", no);
+//	params.put("file_dikirim", );
+	
+        StringBuilder postData = new StringBuilder();
+        for (Map.Entry<String, Object> param : params.entrySet()) {
+            if (postData.length() != 0) postData.append('&');
+            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+            postData.append('=');
+            postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+        }
+	
+        byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+        conn.setDoOutput(true);
+        conn.getOutputStream().write(postDataBytes);
+        
+        Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+        StringBuilder sb = new StringBuilder();
+        for (int c; (c = in.read()) >= 0;)
+            sb.append((char)c);
+        String response = sb.toString();
+        
+        System.out.println(response);
+        JSONObject myResponse = new JSONObject(response.toString());
+//        System.out.println("result after Reading JSON Response");
+//        System.out.println("origin- "+myResponse.getString("origin"));
+//        System.out.println("url- "+myResponse.getString("url"));
+//        
+//        JSONObject form_data = myResponse.getJSONObject("message");
+//        System.out.println("CODE- "+form_data.getString("number"));
+    }
+}
+
 
     
-    
-}
+

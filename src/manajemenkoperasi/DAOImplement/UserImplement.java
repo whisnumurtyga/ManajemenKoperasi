@@ -20,4 +20,6 @@ public interface UserImplement {
     public List<User> getUser(String name);
     public User getUserEmail(String email);
      public List<User> filter(String level);
+     
+    public User get(Integer id);
 }

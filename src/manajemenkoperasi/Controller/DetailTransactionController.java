@@ -35,13 +35,14 @@ public class DetailTransactionController {
     
     public void delete(Integer row) {
         listDetailTransaction = detailTransactionImplement.getAll(LoginController.userLogged.getId());
+        JOptionPane.showMessageDialog(null, "size list : "  + listDetailTransaction.size());
+        JOptionPane.showMessageDialog(null, "row : "  + row);
         Integer i = 0;
         while(i < listDetailTransaction.size()) {
-            JOptionPane.showMessageDialog(null, listDetailTransaction.get(i).getId());
+            JOptionPane.showMessageDialog(null, "detail transaction ke - " + i + " " + listDetailTransaction.get(i).getId());
             i++;
         }
         DetailTransaction dt = listDetailTransaction.get(row);
-//        JOptionPane.showMessageDialog(null, dt.getId());
         
         if(dt != null){ 
             detailTransactionImplement.delete(dt);    

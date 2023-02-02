@@ -16,6 +16,7 @@ public interface GoodsImplement {
     public void insert(Goods g);
     public void update(Goods g);
     public void delete(Integer id);
+    public void updateQty(Integer gId, Integer qty);
     
     public List<Goods> getGoods();
     public List<Goods> getGood(String name);

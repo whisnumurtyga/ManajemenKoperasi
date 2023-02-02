@@ -235,5 +235,27 @@ public class GoodsDAO implements GoodsImplement {
         } 
         return listGoods;
     }
+
+    @Override
+    public void updateQty(Integer gId, Integer qty) {
+        Integer oldStock = getGood(gId).getStock();
+        PreparedStatement statement = null;
+        try{
+            statement = (PreparedStatement) connection.prepareStatement("UPDATE goods SET stock=? WHERE id=? ;");
+            statement.setInt(1, (oldStock-qty));
+            statement.setInt(2, gId);
+            statement.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
    
 }
