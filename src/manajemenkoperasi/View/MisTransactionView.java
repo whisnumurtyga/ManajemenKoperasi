@@ -25,12 +25,20 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.general.DefaultPieDataset;
 
+import javax.swing.JFrame;  
+import javax.swing.SwingUtilities;  
+  
+import org.jfree.chart.ChartFactory;  
+import org.jfree.chart.ChartPanel;  
+import org.jfree.chart.JFreeChart;  
+import org.jfree.data.category.DefaultCategoryDataset;  
+  
 
 /**
  *
  * @author ASUS
  */
-public class MisTransactionView extends javax.swing.JFrame {    
+public class MisTransactionView extends javax.swing.JFrame {   
         Connection connection;
     /**
      * Creates new form MisTransactionView
@@ -43,17 +51,16 @@ public class MisTransactionView extends javax.swing.JFrame {
          chartPayment();
     }
     
-    
       public void showPiechartMostSelling(){
          DefaultPieDataset pieChartData = new DefaultPieDataset();
           try{
            
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery("SELECT goods.name, SUM(detail_transactions.qty) AS total\n" +
-            "    FROM goods, detail_transactions\n" +
-            "    WHERE  detail_transactions.goods_id = goods.id\n" +
-            "    GROUP BY goods.name\n" +
-            "    ORDER BY total DESC;");      
+"    FROM goods, detail_transactions\n" +
+"    WHERE  detail_transactions.goods_id = goods.id\n" +
+"    GROUP BY goods.name\n" +
+"    ORDER BY total DESC;");      
             while(rs.next()) {
             int total = rs.getInt("total");
             String name = rs.getString("goods.name");
@@ -122,7 +129,7 @@ public class MisTransactionView extends javax.swing.JFrame {
           try{
             
             
-            java.sql.PreparedStatement st = connection.prepareStatement("SELECT goods.name, SUM(detail_transactions.qty) AS total\n" +
+            java.sql.PreparedStatement st = connection.prepareStatement("SELECT goods.name, sum(detail_transactions.qty) AS total\n" +
 "FROM goods, detail_transactions,transactions\n" +
 "WHERE  detail_transactions.goods_id = goods.id AND detail_transactions.transaction_id = transactions.id AND transactions.date BETWEEN CONCAT (YEAR(CURDATE()), '-', '" + bulan + "', '-01') AND LAST_DAY(CONCAT (YEAR(CURDATE()), '-', '" + bulan + "', '-01'))\n" +
 "GROUP BY goods.name\n" +

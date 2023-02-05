@@ -10,7 +10,15 @@ package manajemenkoperasi.Model;
  */
 public class Transaction {
     Integer id, userId, totalPay = 0, profit = 0, paymentId, totalCapital = 0, status;
-    String payment;
+    String payment, date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public Integer getStatus() {
         return status;
