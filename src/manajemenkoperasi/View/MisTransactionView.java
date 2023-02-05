@@ -49,6 +49,7 @@ public class MisTransactionView extends javax.swing.JFrame {
          connection = UserConnection.connection();
          showPiechartMostSelling();
          chartPayment();
+         LineChart() ;
     }
     
       public void showPiechartMostSelling(){
@@ -256,6 +257,106 @@ public class MisTransactionView extends javax.swing.JFrame {
         
          
      }
+    
+     public void LineChart() {
+      
+        // Create dataset  
+        DefaultCategoryDataset dataset = createDataset();  
+        // Create chart  
+        JFreeChart chart = ChartFactory.createLineChart(  
+            "Profit", // Chart title  
+            "", // X-Axis Label  
+            "Profit", // Y-Axis Label  
+            dataset  
+            );  
+        CategoryPlot p = chart.getCategoryPlot();
+           p.setBackgroundPaint(Color.WHITE);
+          
+           
+        ChartPanel panel = new ChartPanel(chart);  
+         LineChart.removeAll();
+          LineChart.add(panel,BorderLayout.CENTER);
+        LineChart.validate();
+    }
+    
+    public DefaultCategoryDataset createDataset() {  
+
+        String series1 = "Month";  
+//        String series2 = s2;  
+
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();  
+        
+        try{
+            java.sql.Statement st = connection.createStatement();
+            ResultSet rs = (ResultSet) st.executeQuery("SELECT MONTH(t.date) AS month, t.date, SUM(t.profit) as total FROM transactions t GROUP BY t.date");  
+            int total = 0;
+            int curMonth = 0;
+            
+            while(rs.next()) {
+                int m = rs.getInt("month");
+                
+//                JOptionPane.showMessageDialog(null, m);
+//                JOptionPane.showMessageDialog(null, getMonthName(m));
+               
+                if(curMonth == 0) {
+                    curMonth = m;
+                }
+                
+                if(curMonth == m){
+                    total += rs.getInt("total");
+                }else {
+//                    JOptionPane.showMessageDialog(null, "total : " + total + getMonthName(curMonth));
+                    dataset.addValue(total, series1, getMonthName(curMonth));  
+                    curMonth = m;
+                    total = 0;
+                    total += rs.getInt("total");
+                }
+                
+                if(!rs.next()) {
+                    JOptionPane.showMessageDialog(null, "last data ");
+                    dataset.addValue(total, series1, getMonthName(m));  
+                }
+            }
+
+        } catch(Exception e) {
+            System.out.println(e);
+        } 
+        return dataset;  
+    }  
+    
+    public String getMonthName(Integer n) {
+        switch (n) {
+            case 1 : 
+                return "January";
+            case 2 :
+                return "February";
+            case 3 :
+                return "March";
+            case 4 : 
+                return "April";
+            case 5 : 
+                return "May";
+            case 6 : 
+                return "June";
+            case 7 : 
+                return "July";
+            case 8 : 
+                return "August";
+            case 9 : 
+                return "September";
+            case 10 : 
+                return "October";
+            case 11 : 
+                return "November";
+            case 12 : 
+                return "Desember";
+            default :
+                return null;
+        }
+    }
+
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -272,6 +373,7 @@ public class MisTransactionView extends javax.swing.JFrame {
         BoxFilterChart = new javax.swing.JComboBox<>();
         btnRefresh = new javax.swing.JButton();
         BoxFilterPayment = new javax.swing.JComboBox<>();
+        LineChart = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -280,6 +382,9 @@ public class MisTransactionView extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("MIS TRANSACTION");
 
+        PieChartMostSell.setMaximumSize(new java.awt.Dimension(347, 218));
+        PieChartMostSell.setMinimumSize(new java.awt.Dimension(347, 218));
+        PieChartMostSell.setPreferredSize(new java.awt.Dimension(347, 218));
         PieChartMostSell.setLayout(new java.awt.BorderLayout());
 
         PieChartPayment.setPreferredSize(new java.awt.Dimension(344, 219));
@@ -308,25 +413,34 @@ public class MisTransactionView extends javax.swing.JFrame {
             }
         });
 
+        LineChart.setMaximumSize(new java.awt.Dimension(347, 219));
+        LineChart.setLayout(new java.awt.BorderLayout());
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(351, 351, 351))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(74, 74, 74)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(BoxFilterChart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PieChartMostSell, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PieChartPayment, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRefresh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BoxFilterPayment, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BoxFilterChart, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PieChartMostSell, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 211, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(PieChartPayment, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BoxFilterPayment, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(261, 261, 261)
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(53, 53, 53))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(298, 298, 298)
+                .addComponent(LineChart, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,11 +453,13 @@ public class MisTransactionView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BoxFilterChart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BoxFilterPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PieChartMostSell, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PieChartPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(289, Short.MAX_VALUE))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(PieChartPayment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PieChartMostSell, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addComponent(LineChart, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -354,7 +470,9 @@ public class MisTransactionView extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -415,6 +533,7 @@ public class MisTransactionView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> BoxFilterChart;
     private javax.swing.JComboBox<String> BoxFilterPayment;
+    private javax.swing.JPanel LineChart;
     private javax.swing.JPanel PieChartMostSell;
     private javax.swing.JPanel PieChartPayment;
     private javax.swing.JButton btnRefresh;
