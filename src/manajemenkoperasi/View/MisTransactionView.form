@@ -48,8 +48,8 @@
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="351" max="-2" attributes="0"/>
               </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace min="74" pref="74" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="BoxFilterChart" min="-2" max="-2" attributes="0"/>
                       <Component id="PieChartMostSell" min="-2" pref="347" max="-2" attributes="0"/>

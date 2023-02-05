@@ -16,8 +16,15 @@ import static manajemenkoperasi.Connection.UserConnection.connection;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.GroupedStackedBarRenderer;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.general.DefaultPieDataset;
+
 
 /**
  *
@@ -42,21 +49,24 @@ public class MisTransactionView extends javax.swing.JFrame {
           try{
            
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT goods.name, COUNT(detail_transactions.goods_id) AS total\n" +
-"    FROM goods, detail_transactions\n" +
-"    WHERE  detail_transactions.goods_id = goods.id\n" +
-"    GROUP BY goods.name\n" +
-"    ORDER BY total DESC;");      
+            ResultSet rs = st.executeQuery("SELECT goods.name, SUM(detail_transactions.qty) AS total\n" +
+            "    FROM goods, detail_transactions\n" +
+            "    WHERE  detail_transactions.goods_id = goods.id\n" +
+            "    GROUP BY goods.name\n" +
+            "    ORDER BY total DESC;");      
             while(rs.next()) {
             int total = rs.getInt("total");
             String name = rs.getString("goods.name");
             pieChartData.setValue(name, Integer.valueOf(total));
+            
             }
             JFreeChart chart = ChartFactory.createPieChart3D("MOST SELLING GOODS", pieChartData, true,true, false);
+            
            PiePlot piePlot = (PiePlot) chart.getPlot();
-           
+           piePlot.setLabelGenerator(null);
            piePlot.setBackgroundPaint(Color.WHITE);
             ChartPanel piechart = new ChartPanel(chart);
+          
            PieChartMostSell.removeAll();
            PieChartMostSell.add(piechart,BorderLayout.CENTER);
         PieChartMostSell.validate();
@@ -112,7 +122,7 @@ public class MisTransactionView extends javax.swing.JFrame {
           try{
             
             
-            java.sql.PreparedStatement st = connection.prepareStatement("SELECT goods.name, COUNT(detail_transactions.goods_id) AS total\n" +
+            java.sql.PreparedStatement st = connection.prepareStatement("SELECT goods.name, SUM(detail_transactions.qty) AS total\n" +
 "FROM goods, detail_transactions,transactions\n" +
 "WHERE  detail_transactions.goods_id = goods.id AND detail_transactions.transaction_id = transactions.id AND transactions.date BETWEEN CONCAT (YEAR(CURDATE()), '-', '" + bulan + "', '-01') AND LAST_DAY(CONCAT (YEAR(CURDATE()), '-', '" + bulan + "', '-01'))\n" +
 "GROUP BY goods.name\n" +
@@ -125,7 +135,7 @@ public class MisTransactionView extends javax.swing.JFrame {
             }
             JFreeChart chart = ChartFactory.createPieChart3D("MOST SELLING GOODS", pieChartData, true,true, false);
            PiePlot piePlot = (PiePlot) chart.getPlot();
-           
+           piePlot.setLabelGenerator(null);
            piePlot.setBackgroundPaint(Color.WHITE);
             ChartPanel piechart = new ChartPanel(chart);
            PieChartMostSell.removeAll();
@@ -214,11 +224,11 @@ public class MisTransactionView extends javax.swing.JFrame {
              
           try{
             java.sql.PreparedStatement st = connection.prepareStatement("SELECT p.name, COUNT(p.id) AS total\n" +
-"FROM payments p, transactions t\n" +
-"WHERE t.payment_id = p.id AND\n" +
-"t.date BETWEEN CONCAT(YEAR(CURDATE()), '-', '" + bulan + "', '-01') AND LAST_DAY(CONCAT(YEAR(CURDATE()), '-', '" + bulan + "', '-01'))\n" +
-"GROUP BY p.name\n" +
-"ORDER BY total DESC");
+            "FROM payments p, transactions t\n" +
+            "WHERE t.payment_id = p.id AND\n" +
+            "t.date BETWEEN CONCAT(YEAR(CURDATE()), '-', '" + bulan + "', '-01') AND LAST_DAY(CONCAT(YEAR(CURDATE()), '-', '" + bulan + "', '-01'))\n" +
+            "GROUP BY p.name\n" +
+            "ORDER BY total DESC");
             ResultSet rs = st.executeQuery();
             while(rs.next()) {
             int total = rs.getInt("total");
@@ -239,7 +249,6 @@ public class MisTransactionView extends javax.swing.JFrame {
         
          
      }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
