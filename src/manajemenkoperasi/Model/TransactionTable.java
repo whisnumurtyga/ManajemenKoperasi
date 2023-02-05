@@ -51,7 +51,7 @@ public class TransactionTable extends AbstractTableModel {
   public Object getValueAt(int rowIndex, int columnIndex) {
         switch(columnIndex) {
             case 0:
-                return userImplement.get    (listTransaction.get(rowIndex).getUserId()).getName();
+                return userImplement.get(listTransaction.get(rowIndex).getUserId()).getName();
             case 1:
                 return listTransaction.get(rowIndex).getDate();
             case 2:

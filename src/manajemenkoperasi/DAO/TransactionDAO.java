@@ -11,8 +11,11 @@ import static manajemenkoperasi.Connection.UserConnection.connection;
 import manajemenkoperasi.DAOImplement.TransactionImplement;
 import manajemenkoperasi.Model.Transaction;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import manajemenkoperasi.Model.DetailTransaction;
+import manajemenkoperasi.Model.Goods;
+import manajemenkoperasi.Model.User;
 
 /**
  *
@@ -153,6 +156,33 @@ public class TransactionDAO implements TransactionImplement  {
         }
     }
     
+
+
+    @Override
+    public List<Transaction> getTransactions() {
+        List <Transaction> listTransactions = null;
+        try{
+            listTransactions = new ArrayList<Transaction>();
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM transactions");
+            
+            while(rs.next()) {
+                Transaction t = new Transaction();
+                t.setId(rs.getInt("id"));
+                t.setUserId(rs.getInt("user_id"));
+                t.setDate(rs.getString("date"));
+                t.setStatus(rs.getInt("status"));
+                t.setTotalPay(rs.getInt("total_pay"));
+                t.setTotalCapital(rs.getInt("total_capital"));
+                t.setProfit(rs.getInt("profit"));
+                t.setPayment(rs.getInt("payment_id"));
+                listTransactions.add(t);
+            }
+        } catch(SQLException e) {
+            System.out.println(e);
+        } 
+        return listTransactions;
+    }
     
 
 }

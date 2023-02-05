@@ -22,4 +22,5 @@ public interface TransactionImplement {
     public void updateDone(Transaction t);
     
     public Transaction get(Integer userId);
+    public List<Transaction> getTransactions();
 }

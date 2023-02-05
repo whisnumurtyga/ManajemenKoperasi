@@ -30,6 +30,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import manajemenkoperasi.DAO.UserDAO;
 import manajemenkoperasi.DAOImplement.UserImplement;
+import manajemenkoperasi.Model.TransactionTable;
+import manajemenkoperasi.View.MisTransactionView;
 import org.json.JSONObject;
 
 /**
@@ -45,6 +47,8 @@ public class TransactionController {
     List <DetailTransaction> listDetailTransaction;
     Integer sendInvoice = 0;
     UserImplement userImplement;
+    List <Transaction> listTransactions;
+    MisTransactionView misTransactionFrame;
 
     public TransactionController(TransactionView transactionFrame) {
         this.transactionFrame = transactionFrame;
@@ -55,9 +59,36 @@ public class TransactionController {
         listDetailTransaction = detailTransactionImplement.getAll(LoginController.userLogged.getId());
         listDetailTransaction.size();
         userImplement = new UserDAO();
-        
+        listTransactions = transactionImplement.getTransactions();
     }
     
+    public TransactionController(MisTransactionView misTransactionFrame) {
+        this.misTransactionFrame = misTransactionFrame;
+        transactionImplement = new TransactionDAO();
+        goodsImplement = new GoodsDAO();
+        listGoods = goodsImplement.getGoods();
+        detailTransactionImplement = new DetailTransactionDAO();
+        listDetailTransaction = detailTransactionImplement.getAll(LoginController.userLogged.getId());
+        listDetailTransaction.size();
+        userImplement = new UserDAO();
+        listTransactions = transactionImplement.getTransactions();
+    }
+    
+    
+    public void fillTableTransaction() {
+        listTransactions = transactionImplement.getTransactions();
+        TransactionTable transactionTable = new TransactionTable(listTransactions);
+        
+        if(misTransactionFrame != null) {
+            misTransactionFrame.getTableTransaction().setModel(transactionTable);
+        } 
+        
+        if(transactionFrame != null) {
+            transactionFrame.getTableTransaction().setModel(transactionTable);
+        } 
+        
+    }
+        
     public void fillTableDetailTransaction() {
         listDetailTransaction = detailTransactionImplement.getAll(LoginController.userLogged.getId());
         if(listDetailTransaction == null) {
