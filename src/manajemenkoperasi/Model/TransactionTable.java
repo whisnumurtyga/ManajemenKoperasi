@@ -29,7 +29,7 @@ public class TransactionTable extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-         return 5;
+         return 4;
     }
     @Override
        public String getColumnName(int columnIndex) {
@@ -42,8 +42,7 @@ public class TransactionTable extends AbstractTableModel {
                    return "Total";
                case 3:
                    return "Via";
-               case 4 : 
-                   return null;
+              
            }
            return "";
        }
@@ -58,8 +57,7 @@ public class TransactionTable extends AbstractTableModel {
                 return listTransaction.get(rowIndex).getTotalPay();
             case 3:
                 return listTransaction.get(rowIndex).getPayment();
-            case 4:
-                return null;
+          
         }
         return "";
     }

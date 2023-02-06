@@ -83,10 +83,6 @@ public class TransactionController {
             misTransactionFrame.getTableTransaction().setModel(transactionTable);
         } 
         
-        if(transactionFrame != null) {
-            transactionFrame.getTableTransaction().setModel(transactionTable);
-        } 
-        
     }
         
     public void fillTableDetailTransaction() {
