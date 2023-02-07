@@ -101,10 +101,10 @@ public final class MisView extends javax.swing.JFrame {
           try{
            
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT users.name,COUNT(transactions.user_id) AS total,date\n" +
-"            FROM transactions,users\n" +
-"            WHERE  transactions.user_id = users.id AND date > DATE_SUB(CURDATE(), INTERVAL 90 DAY) AND date < CURDATE()\n" +
-"            GROUP BY transactions.user_id;");      
+            ResultSet rs = st.executeQuery("SELECT u.name, COUNT(t.user_id) AS total\n" +
+"FROM users u, transactions t\n" +
+"WHERE t.user_id = u.id AND t.date BETWEEN DATE_SUB(CURDATE(), INTERVAL 90 DAY) AND CURDATE()\n" +
+"GROUP BY t.user_id");      
             while(rs.next()) {
             int total = rs.getInt("total");
             String name = rs.getString("name");

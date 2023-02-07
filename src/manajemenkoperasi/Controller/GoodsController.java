@@ -95,10 +95,10 @@ public class GoodsController {
         if(!goodsFrame.getTxtIDG().getText().trim().isEmpty()){ 
              
                 goodsImplement.delete(Integer.valueOf(goodsFrame.getTxtIDG().getText()));
-                JOptionPane.showMessageDialog(null, "Successfully delete User");
+                JOptionPane.showMessageDialog(null, "Successfully delete Goods");
             
         }else {
-            JOptionPane.showMessageDialog(goodsFrame, "Failed delete User");
+            JOptionPane.showMessageDialog(goodsFrame, "Failed delete Goods");
         }
     }     
        public void update() {

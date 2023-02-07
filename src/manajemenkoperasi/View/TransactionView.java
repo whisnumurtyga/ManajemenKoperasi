@@ -258,6 +258,11 @@ public class TransactionView extends javax.swing.JFrame {
         btnHistoryTransaction.setBackground(new java.awt.Color(0, 153, 255));
         btnHistoryTransaction.setForeground(new java.awt.Color(255, 255, 255));
         btnHistoryTransaction.setText("History Transaction");
+        btnHistoryTransaction.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistoryTransactionActionPerformed(evt);
+            }
+        });
 
         labelUsername2.setText("G Name");
 
@@ -314,7 +319,7 @@ public class TransactionView extends javax.swing.JFrame {
                                         .addComponent(btnAdd))
                                     .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -438,8 +443,7 @@ public class TransactionView extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -556,6 +560,12 @@ public class TransactionView extends javax.swing.JFrame {
         // TODO add your handling code here:
         transactionController.sendInvoice();
     }//GEN-LAST:event_btnInvoiceActionPerformed
+
+    private void btnHistoryTransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoryTransactionActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new MisTransactionView().setVisible(true);
+    }//GEN-LAST:event_btnHistoryTransactionActionPerformed
 
     /**
      * @param args the command line arguments

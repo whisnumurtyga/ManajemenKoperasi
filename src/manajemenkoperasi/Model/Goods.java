@@ -136,7 +136,7 @@ public class Goods {
                 case "Indomaret":
                     this.supplier_id = 1;
                     break;
-                case "Isatana roti":
+                case "Istana roti":
                     this.supplier_id= 2;
                     break;
                 case "GorenganAsik":
